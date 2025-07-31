@@ -2161,14 +2161,8 @@
            }
            
            #chart-container {
-               height: 250px !important;
-               padding: 0 16px !important;
-               margin: 16px 0 !important;
-           }
-           
-           #chart-container div:first-child {
-               font-size: 12px !important;
-               left: 16px !important;
+               width: 140px !important;
+               height: 75px !important;
            }
            
            .coin-main-info {
@@ -3484,35 +3478,19 @@
                                             <div class="current-price" id="modalCoinPrice">$45,230.50</div>
                                             <div id="modalCoinChange" class="price-change positive">+2.45%</div>
                                         </div>
-                                        <div class="mini-chart-container">
-                                            <canvas id="miniPriceChart" width="140" height="70"></canvas>
-                                            <div class="chart-trend-indicator">
-                                                <i class="fas fa-trending-up trend-icon"></i>
-                                            </div>
+                                        <!-- Chart.js Container - Coin Logo Yanı -->
+                                        <div id="chart-container" style="
+                                            width: 180px; 
+                                            height: 90px; 
+                                            background: rgba(255, 255, 255, 0.03);
+                                            border: 1px solid rgba(255, 255, 255, 0.1);
+                                            border-radius: 10px;
+                                            position: relative;
+                                            overflow: hidden;
+                                        ">
+                                            <canvas id="tradingChart" style="width: 100%; height: 100%;"></canvas>
                                         </div>
                                     </div>
-                                </div>
-                                
-                                <!-- Chart Container -->
-                                <div id="chart-container" style="
-                                    width: 100%; 
-                                    height: 300px; 
-                                    margin: 20px 0; 
-                                    padding: 0 32px;
-                                    background: rgba(255, 255, 255, 0.02);
-                                    border: 1px solid rgba(255, 255, 255, 0.1);
-                                    border-radius: 12px;
-                                    position: relative;
-                                ">
-                                    <div style="
-                                        position: absolute;
-                                        top: 10px;
-                                        left: 20px;
-                                        color: #8896ab;
-                                        font-size: 14px;
-                                        font-weight: 600;
-                                    ">24H Fiyat Hareketi</div>
-                                    <canvas id="tradingChart" style="margin-top: 30px;"></canvas>
                                 </div>
                                 
                                 <!-- Trading Tabs -->
@@ -4240,45 +4218,7 @@
              }
          }
          
-         // Realistic Mini chart animasyonu başlat
-         function startRealisticChartAnimation(coinId, currentPrice) {
-             // İlk çizim
-             drawRealisticMiniChart(coinId, currentPrice);
-             
-             // 3.5 saniyede bir güncelleme (daha profesyonel interval)
-             const chartInterval = setInterval(() => {
-                 // Modal hala açık mı kontrol et
-                 const modal = document.getElementById('tradingModal');
-                 if (!modal || modal.style.display === 'none') {
-                     clearInterval(chartInterval);
-                     return;
-                 }
-                 
-                 // Daha gerçekçi fiyat değişimi (%2 max)
-                 const randomVariation = 1 + (Math.random() - 0.5) * 0.02;
-                 const newPrice = parseFloat(currentPrice) * randomVariation;
-                 drawRealisticMiniChart(coinId, newPrice);
-                 
-                 // Modal price'ı da güncelle
-                 const modalPrice = document.getElementById('modalCoinPrice');
-                 if (modalPrice) {
-                     modalPrice.textContent = `$${newPrice.toLocaleString('en-US', {
-                         minimumFractionDigits: 2,
-                         maximumFractionDigits: 2
-                     })}`;
-                 }
-                 
-                 // Price change'i de güncelle
-                 const changePercent = ((newPrice - currentPrice) / currentPrice) * 100;
-                 const changeElement = document.getElementById('modalCoinChange');
-                 if (changeElement) {
-                     changeElement.textContent = `${changePercent >= 0 ? '+' : ''}${changePercent.toFixed(2)}%`;
-                     changeElement.className = `price-change ${changePercent >= 0 ? 'positive' : 'negative'}`;
-                 }
-                 
-                 currentPrice = newPrice; // Base fiyatı güncelle
-             }, 3500);
-         }
+         // Mini chart kaldırıldı - Sadece Chart.js kullanıyoruz
          
          // Chart.js ile animasyonlu grafik oluştur
          let tradingChart = null;
@@ -4311,10 +4251,10 @@
                  tradingChart.destroy();
              }
              
-             // Sahte veri oluştur (sadece 1 dataset)
+             // Sahte veri oluştur (kompakt grafik için)
              const data = [];
              let prev = 100;
-             for (let i = 0; i < 100; i++) { // 1000 yerine 100 nokta (daha smooth animasyon)
+             for (let i = 0; i < 50; i++) { // 50 nokta (kompakt grafik için)
                  prev += 5 - Math.random() * 10;
                  data.push({x: i, y: prev});
              }
@@ -4346,30 +4286,10 @@
                      scales: {
                          x: {
                              type: 'linear',
-                             display: true,
-                             grid: {
-                                 color: 'rgba(255, 255, 255, 0.1)',
-                                 drawBorder: false
-                             },
-                             ticks: {
-                                 color: 'rgba(255, 255, 255, 0.6)',
-                                 font: {
-                                     size: 12
-                                 }
-                             }
+                             display: false, // Kompakt grafik için axis gizli
                          },
                          y: {
-                             display: true,
-                             grid: {
-                                 color: 'rgba(255, 255, 255, 0.1)',
-                                 drawBorder: false
-                             },
-                             ticks: {
-                                 color: 'rgba(255, 255, 255, 0.6)',
-                                 font: {
-                                     size: 12
-                                 }
-                             }
+                             display: false, // Kompakt grafik için axis gizli
                          }
                      },
                      animation: {
@@ -4387,8 +4307,8 @@
                  tradingChart = new Chart(ctx, config);
                  console.log('✅ Chart başarıyla oluşturuldu');
                  
-                 // Animasyonlu veri ekleme (10 saniye boyunca)
-                 const animationDuration = 10000; // 10 saniye
+                 // Animasyonlu veri ekleme (5 saniye boyunca - kompakt)
+                 const animationDuration = 5000; // 5 saniye
                  const intervalTime = animationDuration / data.length; // Her nokta için süre
                  let currentIndex = 0;
                  
@@ -4497,10 +4417,7 @@
              // Trading modalı için event listener'ları kurulum
              setupTradingModalEvents();
              
-             // Realistic chart'ı başlat
-             setTimeout(() => {
-                 startRealisticChartAnimation(coinId, currentPrice);
-             }, 400); // Modal açılma animasyonu tamamlandıktan sonra
+             // Mini chart kaldırıldı - artık sadece Chart.js kullanıyoruz
              
              // Chart.js grafiğini başlat
              setTimeout(() => {

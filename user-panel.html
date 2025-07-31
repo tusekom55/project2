@@ -4156,10 +4156,12 @@
                                 <div class="chart-container-modern" style="
                                     width: 100% !important;
                                     height: 300px !important;
-                                    background: #ff0000 !important;
-                                    border: 3px solid #00ff00 !important;
+                                    background: rgba(255, 255, 255, 0.03) !important;
+                                    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+                                    border-radius: 12px !important;
                                     position: relative !important;
                                     margin-bottom: 20px !important;
+                                    padding: 12px !important;
                                 ">
                                     <canvas id="tradingChart" style="
                                         width: 100% !important;
@@ -4170,13 +4172,14 @@
                                         position: absolute !important;
                                         top: 10px !important;
                                         left: 10px !important;
-                                        color: white !important;
-                                        font-size: 16px !important;
+                                        color: #00ff00 !important;
+                                        font-size: 12px !important;
                                         z-index: 1000 !important;
-                                        background: #000000 !important;
-                                        padding: 10px !important;
+                                        background: rgba(0, 0, 0, 0.8) !important;
+                                        padding: 6px 8px !important;
+                                        border-radius: 4px !important;
                                     ">
-                                        🔥 CHART CONTAINER BURADA! 🔥
+                                        📊 Chart Ready
                                     </div>
                                 </div>
                                 <div class="chart-stats">
@@ -4975,7 +4978,7 @@
                  });
              }
              
-             // Chart.js konfigürasyonu
+             // Chart.js konfigürasyonu - Basit ve görünür
              const config = {
                  type: 'line',
                  data: {
@@ -4983,14 +4986,17 @@
                      datasets: [{
                          label: 'Bitcoin Fiyatı',
                          data: data.map(d => d.y),
-                         borderColor: '#00E676',
-                         backgroundColor: 'rgba(0, 230, 118, 0.1)',
-                         borderWidth: 2,
+                         borderColor: '#00ff00',
+                         backgroundColor: 'rgba(0, 255, 0, 0.3)',
+                         borderWidth: 3,
                          fill: true,
-                         tension: 0.3,
-                         pointRadius: 0,
-                         pointHoverRadius: 6,
-                         pointHoverBackgroundColor: '#00E676',
+                         tension: 0.1,
+                         pointRadius: 2,
+                         pointBackgroundColor: '#00ff00',
+                         pointBorderColor: '#ffffff',
+                         pointBorderWidth: 1,
+                         pointHoverRadius: 8,
+                         pointHoverBackgroundColor: '#00ff00',
                          pointHoverBorderColor: '#ffffff',
                          pointHoverBorderWidth: 2,
                      }]
@@ -5008,23 +5014,27 @@
                              type: 'linear',
                              display: true,
                              grid: {
-                                 color: 'rgba(255, 255, 255, 0.1)',
+                                 color: 'rgba(255, 255, 255, 0.3)',
                                  drawBorder: false,
                              },
                              ticks: {
-                                 display: false
+                                 color: '#ffffff',
+                                 font: {
+                                     size: 12
+                                 },
+                                 maxTicksLimit: 8
                              }
                          },
                          y: {
                              display: true,
                              grid: {
-                                 color: 'rgba(255, 255, 255, 0.1)',
+                                 color: 'rgba(255, 255, 255, 0.3)',
                                  drawBorder: false,
                              },
                              ticks: {
-                                 color: 'rgba(255, 255, 255, 0.6)',
+                                 color: '#ffffff',
                                  font: {
-                                     size: 10
+                                     size: 12
                                  },
                                  callback: function(value) {
                                      return '$' + value.toLocaleString();

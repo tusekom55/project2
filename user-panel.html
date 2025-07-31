@@ -1325,6 +1325,12 @@
              text-transform: uppercase;
          }
          
+         .coin-price-section {
+             display: flex;
+             align-items: center;
+             gap: 20px;
+         }
+         
          .coin-price-info {
              text-align: right;
          }
@@ -1334,6 +1340,56 @@
              font-size: 28px;
              font-weight: 700;
              margin-bottom: 8px;
+         }
+         
+         /* Mini Chart Styles */
+         .mini-chart-container {
+             position: relative;
+             width: 120px;
+             height: 60px;
+             background: rgba(255, 255, 255, 0.05);
+             border-radius: 12px;
+             border: 1px solid rgba(255, 255, 255, 0.1);
+             overflow: hidden;
+             display: flex;
+             align-items: center;
+             justify-content: center;
+         }
+         
+         #miniPriceChart {
+             width: 100%;
+             height: 100%;
+             border-radius: 11px;
+         }
+         
+         .chart-trend-indicator {
+             position: absolute;
+             top: 6px;
+             right: 6px;
+             width: 16px;
+             height: 16px;
+             border-radius: 50%;
+             background: rgba(76, 175, 80, 0.2);
+             display: flex;
+             align-items: center;
+             justify-content: center;
+             backdrop-filter: blur(10px);
+         }
+         
+         .trend-icon {
+             font-size: 8px;
+             color: #4caf50;
+             animation: trendPulse 2s ease-in-out infinite;
+         }
+         
+         .trend-icon.down {
+             color: #f44336;
+             transform: rotate(180deg);
+         }
+         
+         @keyframes trendPulse {
+             0%, 100% { opacity: 0.7; transform: scale(1); }
+             50% { opacity: 1; transform: scale(1.1); }
          }
          
          /* Modern Trading Tabs */
@@ -2081,6 +2137,17 @@
                flex-direction: column !important;
                align-items: flex-start !important;
                gap: 12px !important;
+           }
+           
+           .coin-price-section {
+               width: 100% !important;
+               justify-content: space-between !important;
+               gap: 12px !important;
+           }
+           
+           .mini-chart-container {
+               width: 100px !important;
+               height: 50px !important;
            }
            
            .coin-main-info {
@@ -3391,10 +3458,18 @@
                                             <span id="modalCoinSymbol" class="coin-symbol-badge">BTC</span>
                                         </div>
                                     </div>
-                                    <div class="coin-price-info">
-                                        <div class="current-price" id="modalCoinPrice">$45,230.50</div>
-                                        <div id="modalCoinChange" class="price-change positive">+2.45%</div>
-                                </div>
+                                                                        <div class="coin-price-section">
+                                        <div class="coin-price-info">
+                                            <div class="current-price" id="modalCoinPrice">$45,230.50</div>
+                                            <div id="modalCoinChange" class="price-change positive">+2.45%</div>
+                                        </div>
+                                        <div class="mini-chart-container">
+                                            <canvas id="miniPriceChart" width="120" height="60"></canvas>
+                                            <div class="chart-trend-indicator">
+                                                <i class="fas fa-trending-up trend-icon"></i>
+                                            </div>
+                                        </div>
+                                    </div>
                             </div>
                             
                                 <!-- Trading Tabs -->
@@ -3954,6 +4029,122 @@
              marketContainer.insertBefore(statusInfo, marketFilters.nextSibling);
          }
          
+         // Mini chart çizme fonksiyonu
+         function drawMiniChart(coinId, currentPrice) {
+             const canvas = document.getElementById('miniPriceChart');
+             if (!canvas) return;
+             
+             const ctx = canvas.getContext('2d');
+             const width = canvas.width;
+             const height = canvas.height;
+             
+             // Canvas'ı temizle
+             ctx.clearRect(0, 0, width, height);
+             
+             // Sahte fiyat verisi oluştur (son 20 nokta)
+             const dataPoints = 20;
+             const priceData = [];
+             let basePrice = parseFloat(currentPrice) || 45000;
+             
+             for (let i = 0; i < dataPoints; i++) {
+                 const variation = (Math.random() - 0.5) * 0.06; // %6 varyasyon
+                 const trend = Math.sin((i / dataPoints) * Math.PI) * 0.03; // Sinüs trend
+                 const noise = (Math.random() - 0.5) * 0.02; // Gürültü
+                 const price = basePrice * (1 + variation + trend + noise);
+                 priceData.push(price);
+             }
+             
+             // Min/Max değerleri bul
+             const minPrice = Math.min(...priceData);
+             const maxPrice = Math.max(...priceData);
+             const priceRange = maxPrice - minPrice;
+             
+             // Gradient oluştur
+             const gradient = ctx.createLinearGradient(0, 0, 0, height);
+             const isUpTrend = priceData[priceData.length - 1] > priceData[0];
+             
+             if (isUpTrend) {
+                 gradient.addColorStop(0, 'rgba(76, 175, 80, 0.3)');
+                 gradient.addColorStop(1, 'rgba(76, 175, 80, 0.05)');
+             } else {
+                 gradient.addColorStop(0, 'rgba(244, 67, 54, 0.3)');
+                 gradient.addColorStop(1, 'rgba(244, 67, 54, 0.05)');
+             }
+             
+             // Çizgi çiz
+             ctx.strokeStyle = isUpTrend ? '#4CAF50' : '#F44336';
+             ctx.lineWidth = 2;
+             ctx.lineCap = 'round';
+             ctx.lineJoin = 'round';
+             
+             ctx.beginPath();
+             priceData.forEach((price, index) => {
+                 const x = (width / (dataPoints - 1)) * index;
+                 const y = height - ((price - minPrice) / priceRange) * height;
+                 
+                 if (index === 0) {
+                     ctx.moveTo(x, y);
+                 } else {
+                     ctx.lineTo(x, y);
+                 }
+             });
+             ctx.stroke();
+             
+             // Fill area under curve
+             ctx.beginPath();
+             priceData.forEach((price, index) => {
+                 const x = (width / (dataPoints - 1)) * index;
+                 const y = height - ((price - minPrice) / priceRange) * height;
+                 
+                 if (index === 0) {
+                     ctx.moveTo(x, y);
+                 } else {
+                     ctx.lineTo(x, y);
+                 }
+             });
+             ctx.lineTo(width, height);
+             ctx.lineTo(0, height);
+             ctx.closePath();
+             ctx.fillStyle = gradient;
+             ctx.fill();
+             
+             // Trend indicator güncelle
+             const trendIcon = document.querySelector('.trend-icon');
+             if (trendIcon) {
+                 trendIcon.className = `fas fa-trending-${isUpTrend ? 'up' : 'down'} trend-icon${isUpTrend ? '' : ' down'}`;
+             }
+             
+             // Chart indicator background güncelle
+             const chartIndicator = document.querySelector('.chart-trend-indicator');
+             if (chartIndicator) {
+                 chartIndicator.style.background = isUpTrend 
+                     ? 'rgba(76, 175, 80, 0.2)' 
+                     : 'rgba(244, 67, 54, 0.2)';
+             }
+         }
+         
+         // Mini chart animasyonu başlat
+         function startMiniChartAnimation(coinId, currentPrice) {
+             // İlk çizim
+             drawMiniChart(coinId, currentPrice);
+             
+             // 3 saniyede bir güncelleme
+             setInterval(() => {
+                 const randomVariation = 1 + (Math.random() - 0.5) * 0.04; // %4 varyasyon
+                 const newPrice = parseFloat(currentPrice) * randomVariation;
+                 drawMiniChart(coinId, newPrice);
+                 
+                 // Modal price'ı da güncelle
+                 const modalPrice = document.getElementById('modalCoinPrice');
+                 if (modalPrice) {
+                     modalPrice.textContent = `$${newPrice.toLocaleString('en-US', {
+                         minimumFractionDigits: 2,
+                         maximumFractionDigits: 2
+                     })}`;
+                 }
+             }, 3000);
+         }
+
          // Coin bulunamadı mesajı
          function showNoCoinsMessage(searchInput) {
              const marketLoader = document.getElementById('marketLoader');
@@ -4034,11 +4225,10 @@
              // Trading modalı için event listener'ları kurulum
              setupTradingModalEvents();
              
-             // Grafik çiz
-             drawPriceChart(coinId, currentPrice);
-             
-             // Sahte grafik yükle
-             loadFakeChart(coinId);
+             // Mini chart'ı başlat
+             setTimeout(() => {
+                 startMiniChartAnimation(coinId, currentPrice);
+             }, 300); // Modal açılma animasyonu tamamlandıktan sonra
          }
 
          // Trading modalını kapat

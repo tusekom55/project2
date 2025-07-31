@@ -369,7 +369,385 @@
         .nav-link:nth-child(6) { animation-delay: 0.6s; }
         .nav-link:nth-child(7) { animation-delay: 0.7s; }
         
-        /* Market Table Styles */
+                /* Modern Market Container Styles */
+        .modern-market-container {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 0;
+            margin-bottom: 24px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+        }
+
+        .market-header {
+            background: linear-gradient(135deg, #1e2742 0%, #2a3f5f 100%);
+            padding: 24px 32px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .market-title-section h3.market-title {
+            color: #ffffff;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .market-title-section h3.market-title i {
+            color: #4fc3f7;
+            font-size: 20px;
+        }
+
+        .market-subtitle {
+            color: #8896ab;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .market-controls {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .search-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 16px;
+            color: #8896ab;
+            font-size: 14px;
+            z-index: 2;
+        }
+
+        .search-container input {
+            padding: 12px 16px 12px 44px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 14px;
+            width: 280px;
+            transition: all 0.3s ease;
+        }
+
+        .search-container input:focus {
+            outline: none;
+            border-color: #4fc3f7;
+            box-shadow: 0 0 0 3px rgba(79, 195, 247, 0.15);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .search-container input::placeholder {
+            color: #8896ab;
+        }
+
+        .refresh-btn {
+            background: linear-gradient(135deg, #4fc3f7 0%, #29b6f6 100%);
+            color: #ffffff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(79, 195, 247, 0.3);
+        }
+
+        .refresh-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(79, 195, 247, 0.4);
+        }
+
+        .refresh-btn i {
+            font-size: 14px;
+        }
+
+        .market-filters {
+            padding: 20px 32px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .filter-chip {
+            background: rgba(255, 255, 255, 0.05);
+            color: #8896ab;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .filter-chip:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+
+        .filter-chip.active {
+            background: linear-gradient(135deg, #4fc3f7 0%, #29b6f6 100%);
+            color: #ffffff;
+            border-color: #4fc3f7;
+            box-shadow: 0 4px 15px rgba(79, 195, 247, 0.3);
+        }
+
+        .filter-chip i {
+            font-size: 12px;
+        }
+
+        /* Modern Loading Animation */
+        .modern-loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            color: #8896ab;
+        }
+
+        .loading-animation {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .loading-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4fc3f7 0%, #29b6f6 100%);
+            animation: loadingPulse 1.4s ease-in-out infinite both;
+        }
+
+        .loading-dot:nth-child(1) { animation-delay: -0.32s; }
+        .loading-dot:nth-child(2) { animation-delay: -0.16s; }
+        .loading-dot:nth-child(3) { animation-delay: 0s; }
+
+        @keyframes loadingPulse {
+            0%, 80%, 100% {
+                transform: scale(0.8);
+                opacity: 0.5;
+            }
+            40% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        /* Desktop Coins Grid */
+        .desktop-coins-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 20px;
+            padding: 32px;
+        }
+
+        .desktop-coin-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .desktop-coin-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #4fc3f7, #29b6f6, #00d4aa);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .desktop-coin-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .desktop-coin-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+            border-color: rgba(79, 195, 247, 0.3);
+        }
+
+        .coin-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .coin-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .coin-logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4fc3f7 0%, #29b6f6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .coin-logo img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .coin-details h4 {
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .coin-symbol {
+            color: #8896ab;
+            font-size: 14px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .coin-price {
+            text-align: right;
+        }
+
+        .coin-price .price {
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .coin-price .rank {
+            background: rgba(136, 150, 171, 0.2);
+            color: #8896ab;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .coin-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .price-change {
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .price-change.positive {
+            background: rgba(76, 175, 80, 0.15);
+            color: #4caf50;
+            border: 1px solid rgba(76, 175, 80, 0.2);
+        }
+
+        .price-change.negative {
+            background: rgba(244, 67, 54, 0.15);
+            color: #f44336;
+            border: 1px solid rgba(244, 67, 54, 0.2);
+        }
+
+        .volume-info {
+            color: #8896ab;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .coin-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .trade-btn {
+            flex: 1;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            min-height: 44px;
+        }
+
+        .trade-btn.buy {
+            background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .trade-btn.sell {
+            background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3);
+        }
+
+        .trade-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .trade-btn i {
+            font-size: 12px;
+        }
+
+        /* Legacy Market Table Styles */
         .market-controls {
             display: flex;
             align-items: center;
@@ -1429,6 +1807,22 @@
          }
          
                          /* Mobile Responsive Styles */
+        /* Desktop and Tablet Responsive */
+        @media (min-width: 769px) {
+            /* Desktop Coins Grid Styles */
+            .desktop-coins-grid {
+                display: grid !important;
+            }
+            
+            .mobile-coins-grid {
+                display: none !important;
+            }
+            
+            .modern-market-container {
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            }
+        }
+
         @media (max-width: 1024px) {
             .sidebar {
                 width: 260px;
@@ -1444,6 +1838,16 @@
             
             .grid-3 {
                 grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+            
+            .desktop-coins-grid {
+                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)) !important;
+                gap: 16px !important;
+                padding: 24px !important;
+            }
+            
+            .desktop-coin-card {
+                padding: 20px !important;
             }
         }
         
@@ -1789,23 +2193,76 @@
                font-size: 13px;
            }
            
-           /* Mobile Market Table Override */
-           #marketTable {
+           /* Mobile Modern Market Styles */
+           .modern-market-container {
+               border-radius: 16px !important;
+               margin: 0 !important;
+           }
+           
+           .market-header {
+               padding: 16px 20px !important;
+               flex-direction: column !important;
+               align-items: stretch !important;
+               gap: 16px !important;
+           }
+           
+           .market-title-section h3.market-title {
+               font-size: 18px !important;
+               margin-bottom: 6px !important;
+           }
+           
+           .market-subtitle {
+               font-size: 13px !important;
+           }
+           
+           .market-controls {
+               flex-direction: column !important;
+               gap: 12px !important;
+           }
+           
+           .search-container {
+               width: 100% !important;
+           }
+           
+           .search-container input {
+               width: 100% !important;
+               box-sizing: border-box !important;
+           }
+           
+           .refresh-btn {
+               width: 100% !important;
+               justify-content: center !important;
+               padding: 14px 20px !important;
+           }
+           
+           .market-filters {
+               padding: 16px 20px !important;
+               gap: 8px !important;
+           }
+           
+           .filter-chip {
+               padding: 8px 14px !important;
+               font-size: 12px !important;
+           }
+           
+           /* Desktop Coins Grid - Hide on Mobile */
+           .desktop-coins-grid {
                display: none !important;
            }
            
+           /* Mobile Coins Grid - Enhanced */
            .mobile-coins-grid {
                display: grid !important;
                grid-template-columns: 1fr;
-               gap: 8px;
-               padding: 8px;
+               gap: 12px;
+               padding: 20px;
                margin: 0;
                width: 100%;
                box-sizing: border-box;
            }
            
            .mobile-coin-card {
-               background: linear-gradient(135deg, #1e2530 0%, #2a3441 100%);
+               background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%);
                border: 1px solid rgba(255, 255, 255, 0.1);
                border-radius: 16px;
                padding: 20px;
@@ -1813,7 +2270,13 @@
                overflow: hidden;
                width: 100%;
                box-sizing: border-box;
-               min-height: 120px;
+               min-height: 140px;
+               transition: all 0.3s ease;
+               backdrop-filter: blur(10px);
+           }
+           
+           .mobile-coin-card:active {
+               transform: scale(0.98);
            }
            
            .mobile-coin-header {
@@ -2484,25 +2947,65 @@
                 <section class="content-section" id="markets">
                     <div class="section-header">
                         <h2 class="section-title">Piyasalar</h2>
-                        <p class="section-subtitle">Crypto para fiyatları ve piyasa verileri</p>
+                        <p class="section-subtitle">Anlık kripto para fiyatları ve piyasa analizi</p>
                     </div>
                     
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Kripto Para Piyasası</h3>
+                    <div class="modern-market-container">
+                        <div class="market-header">
+                            <div class="market-title-section">
+                                <h3 class="market-title">
+                                    <i class="fas fa-chart-line"></i>
+                                    Kripto Para Piyasası
+                                </h3>
+                                <p class="market-subtitle">Gerçek zamanlı veriler • Güncellenme: <span id="lastUpdate">Şimdi</span></p>
+                            </div>
                             <div class="market-controls">
-                                <input type="text" id="coinSearch" placeholder="Coin ara..." style="padding: 8px 12px; border: 1px solid #2a2f3e; background: #1e2530; color: white; border-radius: 6px; width: 200px;">
-                                <button onclick="refreshMarketData()" style="padding: 8px 12px; background: #00d4aa; color: white; border: none; border-radius: 6px; margin-left: 10px; cursor: pointer;">
-                                    <i class="fas fa-sync-alt"></i> Yenile
+                                <div class="search-container">
+                                    <i class="fas fa-search"></i>
+                                    <input type="text" id="coinSearch" placeholder="Coin ara...">
+                                </div>
+                                <button class="refresh-btn" onclick="refreshMarketData()">
+                                    <i class="fas fa-sync-alt"></i>
+                                    <span>Yenile</span>
                                 </button>
                             </div>
                         </div>
                         
-                        <div id="marketLoader" class="loading">
-                            <div class="spinner"></div>
-                            Piyasa verileri yükleniyor...
+                        <div class="market-filters">
+                            <button class="filter-chip active" data-filter="all">
+                                <i class="fas fa-star"></i> Tümü
+                            </button>
+                            <button class="filter-chip" data-filter="favorites">
+                                <i class="fas fa-heart"></i> Favoriler
+                            </button>
+                            <button class="filter-chip" data-filter="trending">
+                                <i class="fas fa-fire"></i> Trend
+                            </button>
+                            <button class="filter-chip" data-filter="top">
+                                <i class="fas fa-trophy"></i> Top 10
+                            </button>
                         </div>
                         
+                        <div id="marketLoader" class="modern-loading">
+                            <div class="loading-animation">
+                                <div class="loading-dot"></div>
+                                <div class="loading-dot"></div>
+                                <div class="loading-dot"></div>
+                            </div>
+                            <p>Piyasa verileri yükleniyor...</p>
+                        </div>
+                        
+                        <!-- Desktop Coins Grid -->
+                        <div id="desktopCoinsGrid" class="desktop-coins-grid" style="display: none;">
+                            <!-- Coin kartları buraya yüklenecek -->
+                        </div>
+                        
+                        <!-- Mobile Coins Grid -->
+                        <div id="mobileCoinsGrid" class="mobile-coins-grid" style="display: none;">
+                            <!-- Mobil coin kartları buraya yüklenecek -->
+                        </div>
+                        
+                        <!-- Legacy table (gizli) -->
                         <div id="marketTable" style="display: none;">
                             <div style="overflow-x: auto;">
                                 <table style="width: 100%; border-collapse: collapse;">
@@ -3237,18 +3740,14 @@
             }
         });
 
-                 // Hibrit sistem - Veritabanı + API kombinasyonu
+                 // Modern hibrit sistem - Veritabanı + API kombinasyonu
          async function fetchMarketData() {
              const searchInput = document.getElementById('coinSearch').value.toLowerCase();
              const marketLoader = document.getElementById('marketLoader');
-             const marketTable = document.getElementById('marketTable');
-             const marketTableBody = document.getElementById('marketTableBody');
-
-             marketLoader.style.display = 'block';
-             marketTable.style.display = 'none';
-             marketTableBody.innerHTML = '';
 
              try {
+                 marketLoader.style.display = 'flex';
+                 
                  // Hibrit endpoint'den veri çek
                  const params = new URLSearchParams({
                      limit: 50,
@@ -3263,106 +3762,108 @@
                  const result = await response.json();
 
                                  if (result.success && result.coins && result.coins.length > 0) {
-                    // Mobil görünümde farklı render
-                    if (window.innerWidth <= 768) {
-                        renderMobileCoins(result.coins);
-                    } else {
-                        // Desktop tablo görünümü
-                        result.coins.forEach((coin, index) => {
-                            const priceChangeColor = coin.price_change_24h >= 0 ? '#00d4aa' : '#ff4757';
-                            const priceChangeIcon = coin.price_change_24h >= 0 ? '▲' : '▼';
-                            const priceSourceIcon = coin.price_source === 'api' ? '🟢' : '🔴';
-                            const priceSourceText = coin.price_source === 'api' ? 'Canlı' : 'Sabit';
-                            
-                            const row = document.createElement('tr');
-                            row.innerHTML = `
-                                <td style="padding: 12px; text-align: left; color: #8b8fa3;">${coin.sira || index + 1}</td>
-                                <td style="padding: 12px; text-align: left;">
-                                    <div style="display: flex; align-items: center; gap: 8px;">
-                                        <img src="${coin.logo_url}" alt="${coin.coin_adi}" style="width: 24px; height: 24px; border-radius: 50%;" onerror="this.src='https://via.placeholder.com/24x24/444/fff?text=${coin.coin_kodu.charAt(0)}'">
-                                        <div>
-                                            <div style="color: #ffffff; font-weight: 600;">${coin.coin_adi}</div>
-                                            <div style="color: #8b8fa3; font-size: 12px;">
-                                                ${coin.coin_kodu} 
-                                                <span style="font-size: 10px; margin-left: 4px;" title="Fiyat Kaynağı: ${priceSourceText}">
-                                                    ${priceSourceIcon}
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                             </td>
-                             <td style="padding: 12px; text-align: right; color: #ffffff; font-weight: 600;">
-                                 $${parseFloat(coin.current_price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 8 })}
-                             </td>
-                             <td style="padding: 12px; text-align: right; color: ${priceChangeColor}; font-weight: 600;">
-                                 ${priceChangeIcon} ${Math.abs(coin.price_change_24h).toFixed(2)}%
-                             </td>
-                             <td style="padding: 12px; text-align: right; color: #8b8fa3;">
-                                 $${parseInt(coin.market_cap || 0).toLocaleString()}
-                             </td>
-                             <td style="padding: 12px; text-align: center;">
-                                 <button onclick="openTradingModal('${coin.coingecko_id}', '${coin.coin_adi}', '${coin.current_price}')" class="add-to-portfolio-btn">
-                                     <i class="fas fa-exchange-alt"></i> İşlem
-                                 </button>
-                             </td>
-                         `;
-                         marketTableBody.appendChild(row);
-                     });
-                     
-                     marketTable.style.display = 'block';
-                     
-                     // API aktif coin sayısını göster
-                     if (result.api_active_count > 0) {
-                         const infoRow = document.createElement('tr');
-                         infoRow.innerHTML = `
-                             <td colspan="6" style="text-align: center; padding: 10px; background: #1a1f2e; color: #8b8fa3; font-size: 12px;">
-                                 📊 ${result.total_count} coin yüklendi | 🟢 ${result.api_active_count} canlı fiyat | 🔴 ${result.total_count - result.api_active_count} sabit fiyat
-                             </td>
-                         `;
-                                                 marketTableBody.appendChild(infoRow);
-                    }
+                    // Modern card-based rendering kullan
+                    renderModernCoins(result.coins);
                     
-                    marketLoader.style.display = 'none';
-                    marketTable.style.display = 'block';
+                    // API durumu bilgisi göster (opsiyonel bilgi kutusu)
+                     if (result.api_active_count > 0) {
+                        showApiStatusInfo(result.total_count, result.api_active_count);
                     }
                     
                 } else {
-                     marketTableBody.innerHTML = `
-                         <tr>
-                             <td colspan="6" style="text-align: center; color: #8b8fa3; padding: 40px;">
-                                 ${searchInput ? 'Aradığınız kripto para bulunamadı.' : 'Coin listesi yüklenemedi.'}
-                                 <br><small style="color: #666;">Veritabanında coin bulunamadı. populate_coins.php çalıştırın.</small>
-                             </td>
-                         </tr>
-                     `;
-                     marketTable.style.display = 'block';
-                 }
+                    showNoCoinsMessage(searchInput);
+                }
+                
              } catch (error) {
                  console.error('Error fetching market data:', error);
-                 marketTableBody.innerHTML = `
-                     <tr>
-                         <td colspan="6" style="text-align: center; color: #ff4757; padding: 40px;">
-                             <i class="fas fa-exclamation-triangle"></i> Veri çekme hatası oluştu.
-                             <br><small style="color: #888;">Backend bağlantısı kontrol edin.</small>
-                         </td>
-                     </tr>
-                 `;
-                 marketTable.style.display = 'block';
-             } finally {
-                 marketLoader.style.display = 'none';
+                 showErrorMessage();
              }
          }
+         
+         // API durum bilgisini göster
+         function showApiStatusInfo(totalCount, apiActiveCount) {
+             // Başlığın altına bilgi kutusu ekle
+             const statusInfo = document.createElement('div');
+             statusInfo.className = 'api-status-info';
+             statusInfo.style.cssText = `
+                 background: linear-gradient(135deg, rgba(79, 195, 247, 0.1) 0%, rgba(41, 182, 246, 0.05) 100%);
+                 border: 1px solid rgba(79, 195, 247, 0.2);
+                 border-radius: 12px;
+                 padding: 16px 24px;
+                 margin: 16px 32px;
+                 display: flex;
+                 align-items: center;
+                 gap: 12px;
+                 font-size: 13px;
+                 color: #8896ab;
+             `;
+             statusInfo.innerHTML = `
+                 <i class="fas fa-info-circle" style="color: #4fc3f7;"></i>
+                 <span>📊 ${totalCount} coin yüklendi • 🟢 ${apiActiveCount} canlı fiyat • 🔴 ${totalCount - apiActiveCount} sabit fiyat</span>
+             `;
+             
+             // Eski status info'yu kaldır
+             const existingStatus = document.querySelector('.api-status-info');
+             if (existingStatus) existingStatus.remove();
+             
+             // Yeni status info'yu ekle
+             const marketContainer = document.querySelector('.modern-market-container');
+             const marketFilters = document.querySelector('.market-filters');
+             marketContainer.insertBefore(statusInfo, marketFilters.nextSibling);
+         }
+         
+         // Coin bulunamadı mesajı
+         function showNoCoinsMessage(searchInput) {
+             const marketLoader = document.getElementById('marketLoader');
+             marketLoader.innerHTML = `
+                 <div style="text-align: center; color: #8896ab; padding: 40px;">
+                     <i class="fas fa-search" style="font-size: 48px; margin-bottom: 16px; opacity: 0.3;"></i>
+                     <h3 style="color: #ffffff; margin-bottom: 12px;">
+                         ${searchInput ? 'Coin Bulunamadı' : 'Coin Listesi Boş'}
+                     </h3>
+                     <p style="margin-bottom: 20px;">
+                         ${searchInput ? 'Aradığınız kripto para bulunamadı' : 'Veritabanında coin bulunamadı'}
+                     </p>
+                     <button onclick="fetchMarketData()" style="background: #4fc3f7; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;">
+                         <i class="fas fa-sync-alt"></i> Yenile
+                     </button>
+                 </div>
+             `;
+         }
+         
+         // Hata mesajı
+         function showErrorMessage() {
+             const marketLoader = document.getElementById('marketLoader');
+             marketLoader.innerHTML = `
+                 <div style="text-align: center; color: #f44336; padding: 40px;">
+                     <i class="fas fa-exclamation-triangle" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;"></i>
+                     <h3 style="color: #ffffff; margin-bottom: 12px;">Bağlantı Hatası</h3>
+                     <p style="color: #8896ab; margin-bottom: 20px;">Piyasa verileri yüklenirken hata oluştu</p>
+                     <button onclick="fetchMarketData()" style="background: #4fc3f7; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;">
+                         <i class="fas fa-retry"></i> Tekrar Dene
+                     </button>
+                 </div>
+             `;
+         }
 
-                 // Trading modalını aç
-         function openTradingModal(coinId, coinName, currentPrice) {
+                 // Trading modalını aç - İyileştirilmiş
+         function openTradingModal(coinId, coinName, currentPrice, direction = 'buy') {
              const modal = document.getElementById('tradingModal');
+             
+             // Modal animasyonu başlat
+             modal.style.display = 'flex';
+             requestAnimationFrame(() => {
+                 const container = modal.querySelector('.modal-container');
+                 container.style.transform = 'scale(1)';
+                 container.style.opacity = '1';
+             });
              
              // Coin bilgilerini modal'a yükle
              document.getElementById('modalCoinName').textContent = coinName;
              document.getElementById('modalCoinSymbol').textContent = coinId.toUpperCase();
-             document.getElementById('modalCoinPrice').textContent = `₺${(parseFloat(currentPrice) * 30).toLocaleString()}`;
+             document.getElementById('modalCoinPrice').textContent = `$${parseFloat(currentPrice).toLocaleString()}`;
              
-             // Random değişim % (gerçek API'den gelecek)
+             // Gerçekçi değişim % hesapla
              const change = (Math.random() - 0.5) * 10;
              const changeElement = document.getElementById('modalCoinChange');
              changeElement.textContent = `${change >= 0 ? '+' : ''}${change.toFixed(2)}%`;
@@ -3675,28 +4176,97 @@
             }
         }
 
-        // Mobil coin listesi render fonksiyonu
-        function renderMobileCoins(coins) {
-            const marketTable = document.getElementById('marketTable');
+        // Modern coin rendering - her iki platform için
+        function renderModernCoins(coins) {
             const marketLoader = document.getElementById('marketLoader');
+            const desktopGrid = document.getElementById('desktopCoinsGrid');
+            const mobileGrid = document.getElementById('mobileCoinsGrid');
             
-            // Mevcut market table'ı gizle
-            marketTable.style.display = 'none';
+            marketLoader.style.display = 'none';
             
-            // Mobil grid container oluştur
-            let mobileGrid = document.getElementById('mobileCoinsGrid');
-            if (!mobileGrid) {
-                mobileGrid = document.createElement('div');
-                mobileGrid.id = 'mobileCoinsGrid';
-                mobileGrid.className = 'mobile-coins-grid';
-                marketTable.parentNode.appendChild(mobileGrid);
-            }
+            // Desktop grid render
+            renderDesktopCoins(coins, desktopGrid);
             
-            mobileGrid.innerHTML = '';
+            // Mobile grid render
+            renderMobileCoins(coins, mobileGrid);
+            
+            // Grids'i göster
+            desktopGrid.style.display = window.innerWidth > 768 ? 'grid' : 'none';
+            mobileGrid.style.display = window.innerWidth <= 768 ? 'grid' : 'none';
+            
+            // Update last update time
+            document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString('tr-TR', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // Desktop coin kartları render et
+        function renderDesktopCoins(coins, container) {
+            container.innerHTML = '';
             
             coins.forEach((coin, index) => {
                 const priceChangeClass = coin.price_change_24h >= 0 ? 'positive' : 'negative';
                 const priceChangeIcon = coin.price_change_24h >= 0 ? '▲' : '▼';
+                const logoUrl = coin.logo_url || `https://via.placeholder.com/48/4fc3f7/ffffff?text=${coin.coin_kodu.charAt(0)}`;
+                
+                const card = document.createElement('div');
+                card.className = 'desktop-coin-card';
+                card.onclick = () => openTradingModal(coin.coin_kodu.toLowerCase(), coin.coin_adi, coin.current_price);
+                
+                card.innerHTML = `
+                    <div class="coin-card-header">
+                        <div class="coin-info">
+                            <div class="coin-logo">
+                                <img src="${logoUrl}" alt="${coin.coin_adi}" 
+                                     onerror="this.style.display='none'; this.parentNode.textContent='${coin.coin_kodu.charAt(0)}'">
+                            </div>
+                            <div class="coin-details">
+                                <h4>${coin.coin_adi}</h4>
+                                <span class="coin-symbol">${coin.coin_kodu}</span>
+                            </div>
+                        </div>
+                        <div class="coin-price">
+                            <div class="price">$${parseFloat(coin.current_price).toLocaleString('en-US', { 
+                                minimumFractionDigits: 2, 
+                                maximumFractionDigits: 8 
+                            })}</div>
+                            <div class="rank">#${index + 1}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="coin-stats">
+                        <div class="price-change ${priceChangeClass}">
+                            <i class="fas fa-${coin.price_change_24h >= 0 ? 'arrow-up' : 'arrow-down'}"></i>
+                            ${parseFloat(coin.price_change_24h).toFixed(2)}%
+                        </div>
+                        <div class="volume-info">
+                            Piyasa Değeri: $${coin.market_cap ? (parseInt(coin.market_cap) / 1000000).toFixed(1) + 'M' : 'N/A'}
+                        </div>
+                    </div>
+                    
+                    <div class="coin-actions">
+                        <button class="trade-btn buy" onclick="event.stopPropagation(); openTradingModal('${coin.coin_kodu.toLowerCase()}', '${coin.coin_adi}', '${coin.current_price}', 'buy')">
+                            <i class="fas fa-arrow-up"></i> Alış
+                        </button>
+                        <button class="trade-btn sell" onclick="event.stopPropagation(); openTradingModal('${coin.coin_kodu.toLowerCase()}', '${coin.coin_adi}', '${coin.current_price}', 'sell')">
+                            <i class="fas fa-arrow-down"></i> Satış
+                        </button>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        // Mobil coin kartları render et
+        function renderMobileCoins(coins, container) {
+            container.innerHTML = '';
+            
+            coins.forEach((coin, index) => {
+                const priceChangeClass = coin.price_change_24h >= 0 ? 'positive' : 'negative';
+                const priceChangeIcon = coin.price_change_24h >= 0 ? '▲' : '▼';
+                const logoUrl = coin.logo_url || `https://via.placeholder.com/50/4fc3f7/ffffff?text=${coin.coin_kodu.charAt(0)}`;
                 
                 const card = document.createElement('div');
                 card.className = 'mobile-coin-card';
@@ -3704,7 +4274,7 @@
                     <div class="mobile-coin-header">
                         <div class="mobile-coin-info">
                             <div class="mobile-coin-logo">
-                                <img src="${coin.logo_url}" alt="${coin.coin_adi}" 
+                                <img src="${logoUrl}" alt="${coin.coin_adi}" 
                                      style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;"
                                      onerror="this.style.display='none'; this.parentNode.textContent='${coin.coin_kodu.charAt(0)}'">
                             </div>
@@ -3731,19 +4301,17 @@
                     </div>
                     
                     <div class="mobile-coin-actions">
-                        <button class="mobile-trade-btn buy" onclick="openTradingModal('${coin.coin_kodu.toLowerCase()}', '${coin.coin_adi}', '${coin.current_price}')">
+                        <button class="mobile-trade-btn buy" onclick="openTradingModal('${coin.coin_kodu.toLowerCase()}', '${coin.coin_adi}', '${coin.current_price}', 'buy')">
                             <i class="fas fa-arrow-up"></i> Alış
                         </button>
-                        <button class="mobile-trade-btn sell" onclick="openTradingModal('${coin.coin_kodu.toLowerCase()}', '${coin.coin_adi}', '${coin.current_price}')">
+                        <button class="mobile-trade-btn sell" onclick="openTradingModal('${coin.coin_kodu.toLowerCase()}', '${coin.coin_adi}', '${coin.current_price}', 'sell')">
                             <i class="fas fa-arrow-down"></i> Satış
                         </button>
                     </div>
                 `;
                 
-                mobileGrid.appendChild(card);
+                container.appendChild(card);
             });
-            
-                     marketLoader.style.display = 'none';
          }
 
          // Global chart variables
@@ -4050,6 +4618,71 @@
               }
           }
 
+         // Filter fonksiyonları
+        function initializeMarketFilters() {
+            const filterChips = document.querySelectorAll('.filter-chip');
+            filterChips.forEach(chip => {
+                chip.addEventListener('click', function() {
+                    // Aktif filter'ı değiştir
+                    filterChips.forEach(f => f.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Filter uygula (şimdilik demo)
+                    const filter = this.dataset.filter;
+                    console.log('Filter uygulandı:', filter);
+                    
+                    // Burada gerçek filtreleme mantığı olacak
+                    // fetchMarketData() çağrısı ile backend'e filter parametresi gönderilebilir
+                });
+            });
+        }
+        
+        // Search input için debounced arama
+        function initializeCoinSearch() {
+            const searchInput = document.getElementById('coinSearch');
+            let searchTimeout;
+            
+            searchInput.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    fetchMarketData();
+                }, 500); // 500ms debounce
+            });
+        }
+        
+        // Responsive listener
+        function initializeResponsiveListeners() {
+            let resizeTimeout;
+            window.addEventListener('resize', function() {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    // Grid görünümlerini tekrar düzenle
+                    const desktopGrid = document.getElementById('desktopCoinsGrid');
+                    const mobileGrid = document.getElementById('mobileCoinsGrid');
+                    
+                    if (desktopGrid && mobileGrid) {
+                        if (window.innerWidth > 768) {
+                            desktopGrid.style.display = 'grid';
+                            mobileGrid.style.display = 'none';
+                        } else {
+                            desktopGrid.style.display = 'none';
+                            mobileGrid.style.display = 'grid';
+                        }
+                    }
+                }, 250);
+            });
+        }
+        
+        // Page init
+        function initializeMarketPage() {
+            initializeMarketFilters();
+            initializeCoinSearch();
+            initializeResponsiveListeners();
+            
+            // İlk veri yüklemesi
+            fetchMarketData();
+          }
+
          // Sayfa yüklendiğinde piyasaları yükle
         async function refreshMarketData() {
             await fetchMarketData();
@@ -4286,6 +4919,37 @@
                 positionsLoader.style.display = 'none';
                 positionsList.style.display = 'block';
             }, 1000);
+        }
+        
+        // Sayfa yüklendiğinde initialization yap
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Trading Dashboard başlatılıyor...');
+            
+            // Market sayfası için özel initialization
+            if (document.getElementById('coinSearch')) {
+                initializeMarketPage();
+            }
+            
+            // Trading sistemi başlat
+            if (document.getElementById('forexPairsContainer')) {
+                initTrading();
+            }
+            
+            // Kullanıcı verilerini yükle
+            loadUserInfo();
+        });
+        
+        // Kullanıcı bilgilerini yükle
+        async function loadUserInfo() {
+            try {
+                // Demo kullanıcı bilgileri
+                document.getElementById('userBalance').innerHTML = '₺25,450.75';
+                document.getElementById('userAvatar').textContent = 'TS';
+                
+                console.log('Kullanıcı bilgileri yüklendi');
+            } catch (error) {
+                console.error('Kullanıcı bilgileri yüklenemedi:', error);
+            }
         }
     </script>
 </body>

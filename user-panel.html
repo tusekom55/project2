@@ -1281,15 +1281,26 @@
              background: linear-gradient(135deg, #1a1f2e 0%, #2a2f3e 100%);
          }
          
-         /* Coin Info Header */
-         .coin-info-header {
-             background: linear-gradient(135deg, #1e2742 0%, #2a3f5f 100%);
-             padding: 24px 32px;
-             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-             display: flex;
-             justify-content: space-between;
-             align-items: center;
-         }
+                 /* Coin Info Header - Yeni Layout */
+        .coin-info-header {
+            background: linear-gradient(135deg, #1e2742 0%, #2a3f5f 100%);
+            padding: 24px 32px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 30px;
+        }
+        
+        .coin-left-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .coin-chart-section {
+            flex-shrink: 0;
+        }
          
          .coin-main-info {
              display: flex;
@@ -1317,15 +1328,59 @@
              margin-bottom: 8px;
          }
          
-         .coin-symbol-badge {
-             background: rgba(255, 255, 255, 0.1);
-             color: #8896ab;
-             padding: 4px 12px;
-             border-radius: 12px;
-             font-size: 14px;
-             font-weight: 600;
-             text-transform: uppercase;
-         }
+                 .coin-symbol-badge {
+            background: rgba(255, 255, 255, 0.1);
+            color: #8896ab;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        /* Sol taraftaki para bilgileri */
+        .coin-price-info-left {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .coin-price-info-left .current-price {
+            font-size: 32px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+        
+        .coin-price-info-left .price-change {
+            font-size: 16px;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 6px;
+            width: fit-content;
+        }
+        
+        .price-stats {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .stat-label {
+            color: #8b8fa3;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .stat-value {
+            font-size: 14px;
+            font-weight: 600;
+        }
          
          .coin-price-section {
              display: flex;
@@ -2142,12 +2197,17 @@
                height: calc(100% - 70px);
            }
            
-           .coin-info-header {
-               padding: 16px 20px !important;
-               flex-direction: column !important;
-               align-items: flex-start !important;
-               gap: 12px !important;
-           }
+                     .coin-info-header {
+              padding: 16px 20px !important;
+              flex-direction: column !important;
+              align-items: flex-start !important;
+              gap: 12px !important;
+          }
+          
+          .coin-chart-section {
+              width: 100% !important;
+              margin-top: 15px !important;
+          }
            
            .coin-price-section {
                width: 100% !important;
@@ -3462,31 +3522,46 @@
                         <div class="modal-content">
                             <!-- Tek Panel: Modern İşlem Formu -->
                             <div class="modern-trade-panel">
-                                <!-- Coin Bilgi Header -->
+                                <!-- Coin Bilgi Header - Yeni Layout -->
                                 <div class="coin-info-header">
-                                    <div class="coin-main-info">
-                                        <div class="coin-avatar">
-                                            <i class="fab fa-bitcoin"></i>
+                                    <div class="coin-left-section">
+                                        <div class="coin-main-info">
+                                            <div class="coin-avatar">
+                                                <i class="fab fa-bitcoin"></i>
+                                            </div>
+                                            <div class="coin-details">
+                                                <h2 id="modalCoinName">Bitcoin</h2>
+                                                <span id="modalCoinSymbol" class="coin-symbol-badge">BTC</span>
+                                            </div>
                                         </div>
-                                        <div class="coin-details">
-                                            <h2 id="modalCoinName">Bitcoin</h2>
-                                            <span id="modalCoinSymbol" class="coin-symbol-badge">BTC</span>
-                                        </div>
-                                    </div>
-                                                                        <div class="coin-price-section">
-                                        <div class="coin-price-info">
+                                        <!-- Para bilgileri logo altına taşındı -->
+                                        <div class="coin-price-info-left">
                                             <div class="current-price" id="modalCoinPrice">$45,230.50</div>
                                             <div id="modalCoinChange" class="price-change positive">+2.45%</div>
+                                            <!-- 24H yüksek/düşük bilgileri -->
+                                            <div class="price-stats">
+                                                <div class="stat-item">
+                                                    <span class="stat-label">H:</span>
+                                                    <span class="stat-value positive" id="modalCoinHigh">$23,316</span>
+                                                </div>
+                                                <div class="stat-item">
+                                                    <span class="stat-label">L:</span>
+                                                    <span class="stat-value negative" id="modalCoinLow">$3,733</span>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <!-- Chart.js Container - Coin Logo Yanı -->
+                                    </div>
+                                    <!-- Chart.js büyük boyutla sağ tarafa -->
+                                    <div class="coin-chart-section">
                                         <div id="chart-container" style="
-                                            width: 180px; 
-                                            height: 90px; 
+                                            width: 300px; 
+                                            height: 180px; 
                                             background: rgba(255, 255, 255, 0.03);
                                             border: 1px solid rgba(255, 255, 255, 0.1);
-                                            border-radius: 10px;
+                                            border-radius: 15px;
                                             position: relative;
                                             overflow: hidden;
+                                            padding: 10px;
                                         ">
                                             <canvas id="tradingChart" style="width: 100%; height: 100%;"></canvas>
                                         </div>
@@ -4251,13 +4326,13 @@
                  tradingChart.destroy();
              }
              
-             // Sahte veri oluştur (kompakt grafik için)
-             const data = [];
-             let prev = 100;
-             for (let i = 0; i < 50; i++) { // 50 nokta (kompakt grafik için)
-                 prev += 5 - Math.random() * 10;
-                 data.push({x: i, y: prev});
-             }
+                         // Sahte veri oluştur (büyük grafik için)
+            const data = [];
+            let prev = 100;
+            for (let i = 0; i < 100; i++) { // 100 nokta (daha detaylı grafik)
+                prev += 3 - Math.random() * 6; // Daha yumuşak hareketler
+                data.push({x: i, y: Math.max(50, prev)}); // Minimum değer 50
+            }
              
                          // Chart.js konfigürasyonu
             const config = {
@@ -4283,15 +4358,29 @@
                              display: false
                          }
                      },
-                     scales: {
-                         x: {
-                             type: 'linear',
-                             display: false, // Kompakt grafik için axis gizli
-                         },
-                         y: {
-                             display: false, // Kompakt grafik için axis gizli
-                         }
-                     },
+                                         scales: {
+                        x: {
+                            type: 'linear',
+                            display: true,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)',
+                                drawBorder: false,
+                            },
+                            ticks: {
+                                display: false // Sadece grid çizgileri
+                            }
+                        },
+                        y: {
+                            display: true,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)',
+                                drawBorder: false,
+                            },
+                            ticks: {
+                                display: false // Sadece grid çizgileri
+                            }
+                        }
+                    },
                      animation: {
                          duration: 0 // Kendi animasyonumuzu kullanacağız
                      },
@@ -4380,15 +4469,22 @@
              changeElement.textContent = `${change >= 0 ? '+' : ''}${change.toFixed(2)}%`;
              changeElement.className = `price-change ${change >= 0 ? 'positive' : 'negative'}`;
              
-             // Al/Sat fiyatlarını güncelle
-             const buyPrice = parseFloat(currentPrice) * 30 * 1.001; // 0.1% spread
-             const sellPrice = parseFloat(currentPrice) * 30 * 0.999;
-             document.getElementById('buyPrice').textContent = `₺${buyPrice.toFixed(2)}`;
-             document.getElementById('sellPrice').textContent = `₺${sellPrice.toFixed(2)}`;
-             
-             // Quantity suffix'i güncelle
-             document.getElementById('quantitySuffix').textContent = coinId.toUpperCase();
-             document.getElementById('executeText').textContent = `${coinId.toUpperCase()} Al`;
+                         // Al/Sat fiyatlarını güncelle
+            const buyPrice = parseFloat(currentPrice) * 30 * 1.001; // 0.1% spread
+            const sellPrice = parseFloat(currentPrice) * 30 * 0.999;
+            document.getElementById('buyPrice').textContent = `₺${buyPrice.toFixed(2)}`;
+            document.getElementById('sellPrice').textContent = `₺${sellPrice.toFixed(2)}`;
+            
+            // 24H Yüksek/Düşük sahte verilerini güncelle
+            const basePrice = parseFloat(currentPrice);
+            const high = basePrice * (1.05 + Math.random() * 0.15); // +5% ile +20% arası
+            const low = basePrice * (0.85 - Math.random() * 0.15); // -15% ile -5% arası
+            document.getElementById('modalCoinHigh').textContent = `$${Math.round(high).toLocaleString()}`;
+            document.getElementById('modalCoinLow').textContent = `$${Math.round(low).toLocaleString()}`;
+            
+            // Quantity suffix'i güncelle
+            document.getElementById('quantitySuffix').textContent = coinId.toUpperCase();
+            document.getElementById('executeText').textContent = `${coinId.toUpperCase()} Al`;
              
              // Modal'ı göster
              modal.style.display = 'flex';

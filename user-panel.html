@@ -4259,22 +4259,22 @@
                  data.push({x: i, y: prev});
              }
              
-             // Chart.js konfigürasyonu
-             const config = {
-                 type: 'line',
-                 data: {
-                     datasets: [{
-                         label: 'Fiyat Hareketi',
-                         data: [],
-                         borderColor: '#00E676',
-                         backgroundColor: 'rgba(0, 230, 118, 0.1)',
-                         borderWidth: 2,
-                         fill: true,
-                         tension: 0.4,
-                         pointRadius: 0,
-                         pointHoverRadius: 4,
-                     }]
-                 },
+                         // Chart.js konfigürasyonu
+            const config = {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        label: 'Fiyat Hareketi',
+                        data: data, // Baştan veriyle başlat
+                        borderColor: '#00E676',
+                        backgroundColor: 'rgba(0, 230, 118, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 0,
+                        pointHoverRadius: 4,
+                    }]
+                },
                  options: {
                      responsive: true,
                      maintainAspectRatio: false,
@@ -4302,31 +4302,17 @@
                  }
              };
              
-             // Chart'ı oluştur
-             try {
-                 tradingChart = new Chart(ctx, config);
-                 console.log('✅ Chart başarıyla oluşturuldu');
-                 
-                 // Animasyonlu veri ekleme (5 saniye boyunca - kompakt)
-                 const animationDuration = 5000; // 5 saniye
-                 const intervalTime = animationDuration / data.length; // Her nokta için süre
-                 let currentIndex = 0;
-                 
-                 const addDataPoint = () => {
-                     if (currentIndex < data.length && tradingChart) {
-                         tradingChart.data.datasets[0].data.push(data[currentIndex]);
-                         tradingChart.update('none'); // Animasyon olmadan güncelle
-                         currentIndex++;
-                         setTimeout(addDataPoint, intervalTime);
-                     }
-                 };
-                 
-                 // İlk noktayı ekle ve animasyonu başlat
-                 setTimeout(addDataPoint, 500);
-                 
-             } catch (error) {
-                 console.error('❌ Chart oluşturulurken hata:', error);
-             }
+                         // Chart'ı oluştur
+            try {
+                tradingChart = new Chart(ctx, config);
+                console.log('✅ Chart başarıyla oluşturuldu ve veri yüklendi');
+                
+                // Chart'ı render et
+                tradingChart.update();
+                
+            } catch (error) {
+                console.error('❌ Chart oluşturulurken hata:', error);
+            }
          }
          
          // Modal kapanırken chart'ı temizle

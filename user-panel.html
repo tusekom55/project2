@@ -6,8 +6,8 @@
     <title>Trading Dashboard - GlobalTradePro</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Chart.js CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chart.js CDN - Latest Version -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.min.js" defer></script>
     <style>
         * {
             margin: 0;
@@ -2162,8 +2162,13 @@
            
            #chart-container {
                height: 250px !important;
-               padding: 0 20px !important;
+               padding: 0 16px !important;
                margin: 16px 0 !important;
+           }
+           
+           #chart-container div:first-child {
+               font-size: 12px !important;
+               left: 16px !important;
            }
            
            .coin-main-info {
@@ -3489,8 +3494,25 @@
                                 </div>
                                 
                                 <!-- Chart Container -->
-                                <div id="chart-container" style="width: 100%; height: 300px; margin: 20px 0; padding: 0 32px;">
-                                    <canvas id="tradingChart"></canvas>
+                                <div id="chart-container" style="
+                                    width: 100%; 
+                                    height: 300px; 
+                                    margin: 20px 0; 
+                                    padding: 0 32px;
+                                    background: rgba(255, 255, 255, 0.02);
+                                    border: 1px solid rgba(255, 255, 255, 0.1);
+                                    border-radius: 12px;
+                                    position: relative;
+                                ">
+                                    <div style="
+                                        position: absolute;
+                                        top: 10px;
+                                        left: 20px;
+                                        color: #8896ab;
+                                        font-size: 14px;
+                                        font-weight: 600;
+                                    ">24H Fiyat Hareketi</div>
+                                    <canvas id="tradingChart" style="margin-top: 30px;"></canvas>
                                 </div>
                                 
                                 <!-- Trading Tabs -->
@@ -4261,9 +4283,28 @@
          // Chart.js ile animasyonlu grafik oluştur
          let tradingChart = null;
          
+         // Sayfa yüklendiğinde Chart.js'in hazır olduğunu garanti et
+         window.addEventListener('load', function() {
+             console.log('📊 Sayfa yüklendi, Chart.js hazır:', typeof Chart !== 'undefined');
+         });
+         
          function initTradingChart() {
+             console.log('🚀 initTradingChart çağrıldı');
+             
+             // Chart.js yüklenmiş mi kontrol et
+             if (typeof Chart === 'undefined') {
+                 console.error('❌ Chart.js yüklenmemiş!');
+                 setTimeout(initTradingChart, 1000); // 1 saniye bekle ve tekrar dene
+                 return;
+             }
+             
              const ctx = document.getElementById('tradingChart');
-             if (!ctx) return;
+             if (!ctx) {
+                 console.error('❌ tradingChart canvas bulunamadı!');
+                 return;
+             }
+             
+             console.log('✅ Chart.js yüklendi, canvas bulundu');
              
              // Eğer önceki chart varsa yok et
              if (tradingChart) {
@@ -4342,24 +4383,30 @@
              };
              
              // Chart'ı oluştur
-             tradingChart = new Chart(ctx, config);
-             
-             // Animasyonlu veri ekleme (10 saniye boyunca)
-             const animationDuration = 10000; // 10 saniye
-             const intervalTime = animationDuration / data.length; // Her nokta için süre
-             let currentIndex = 0;
-             
-             const addDataPoint = () => {
-                 if (currentIndex < data.length) {
-                     tradingChart.data.datasets[0].data.push(data[currentIndex]);
-                     tradingChart.update('none'); // Animasyon olmadan güncelle
-                     currentIndex++;
-                     setTimeout(addDataPoint, intervalTime);
-                 }
-             };
-             
-             // İlk noktayı ekle ve animasyonu başlat
-             setTimeout(addDataPoint, 500);
+             try {
+                 tradingChart = new Chart(ctx, config);
+                 console.log('✅ Chart başarıyla oluşturuldu');
+                 
+                 // Animasyonlu veri ekleme (10 saniye boyunca)
+                 const animationDuration = 10000; // 10 saniye
+                 const intervalTime = animationDuration / data.length; // Her nokta için süre
+                 let currentIndex = 0;
+                 
+                 const addDataPoint = () => {
+                     if (currentIndex < data.length && tradingChart) {
+                         tradingChart.data.datasets[0].data.push(data[currentIndex]);
+                         tradingChart.update('none'); // Animasyon olmadan güncelle
+                         currentIndex++;
+                         setTimeout(addDataPoint, intervalTime);
+                     }
+                 };
+                 
+                 // İlk noktayı ekle ve animasyonu başlat
+                 setTimeout(addDataPoint, 500);
+                 
+             } catch (error) {
+                 console.error('❌ Chart oluşturulurken hata:', error);
+             }
          }
          
          // Modal kapanırken chart'ı temizle
@@ -4458,7 +4505,7 @@
              // Chart.js grafiğini başlat
              setTimeout(() => {
                  initTradingChart();
-             }, 600); // Modal tamamen açıldıktan sonra
+             }, 800); // Modal tamamen açıldıktan sonra - daha uzun bekleme
          }
 
          // Trading modalını kapat

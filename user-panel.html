@@ -4153,8 +4153,31 @@
                                         <button class="time-btn">1W</button>
                                     </div>
                                 </div>
-                                <div class="chart-container-modern">
-                                    <canvas id="tradingChart"></canvas>
+                                <div class="chart-container-modern" style="
+                                    width: 100% !important;
+                                    height: 300px !important;
+                                    background: #ff0000 !important;
+                                    border: 3px solid #00ff00 !important;
+                                    position: relative !important;
+                                    margin-bottom: 20px !important;
+                                ">
+                                    <canvas id="tradingChart" style="
+                                        width: 100% !important;
+                                        height: 100% !important;
+                                        display: block !important;
+                                    "></canvas>
+                                    <div style="
+                                        position: absolute !important;
+                                        top: 10px !important;
+                                        left: 10px !important;
+                                        color: white !important;
+                                        font-size: 16px !important;
+                                        z-index: 1000 !important;
+                                        background: #000000 !important;
+                                        padding: 10px !important;
+                                    ">
+                                        🔥 CHART CONTAINER BURADA! 🔥
+                                    </div>
                                 </div>
                                 <div class="chart-stats">
                                     <div class="stat-modern">
@@ -4898,19 +4921,31 @@
          });
          
          function initTradingChart() {
-             console.log('🚀 initTradingChart başlatıldı');
+             console.log('🚀🚀🚀 initTradingChart başlatıldı!');
              
              // Chart.js yüklenmiş mi kontrol et
              if (typeof Chart === 'undefined') {
-                 console.error('❌ Chart.js yüklenmemiş!');
+                 console.error('❌❌❌ Chart.js yüklenmemiş!');
                  setTimeout(initTradingChart, 1000); // 1 saniye bekle ve tekrar dene
                  return;
              }
              
-             console.log('✅ Chart.js yüklendi');
+             console.log('✅✅✅ Chart.js yüklendi');
+             
+             const chartContainer = document.querySelector('.chart-container-modern');
+             console.log('📦 Chart container:', chartContainer);
              
              const ctx = document.getElementById('tradingChart');
-                        console.log('📊 Canvas element:', ctx);
+             console.log('📊 Canvas element:', ctx);
+             
+             if (!ctx) {
+                 console.error('❌❌❌ tradingChart canvas bulunamadı!');
+                 return;
+             }
+             
+             console.log('✅✅✅ Canvas bulundu!');
+             console.log('📏 Canvas dimensions:', ctx.width, 'x', ctx.height);
+             console.log('🎨 Canvas style:', ctx.style.cssText);
              
              if (!ctx) {
                  console.error('❌ tradingChart canvas bulunamadı!');
@@ -5008,16 +5043,28 @@
              };
              
              // Chart'ı oluştur
-             try {
-                 console.log('🎨 Chart oluşturuluyor...');
-                 console.log('📊 Data:', data);
-                 console.log('⚙️ Config:', config);
+                          try {
+                 console.log('🎨🎨🎨 Chart oluşturuluyor...');
+                 console.log('📊 Data length:', data.length);
+                 console.log('📊 Sample data:', data.slice(0, 5));
+                 console.log('⚙️ Config type:', config.type);
+                 
                  tradingChart = new Chart(ctx, config);
-                 console.log('✅ Chart başarıyla oluşturuldu');
+                 console.log('✅✅✅ Chart başarıyla oluşturuldu');
+                 
                  tradingChart.update();
-                 console.log('✅ Chart render edildi');
+                 console.log('✅✅✅ Chart render edildi');
+                 
+                 // Chart'ın gerçekten render edilip edilmediğini kontrol et
+                 setTimeout(() => {
+                     console.log('🔍 Chart render kontrolü...');
+                     console.log('📊 Chart data:', tradingChart.data);
+                     console.log('📏 Chart canvas size:', tradingChart.canvas.width, 'x', tradingChart.canvas.height);
+                 }, 1000);
+                 
              } catch (error) {
-                console.error('❌ Chart oluşturulurken hata:', error);
+                 console.error('❌❌❌ Chart oluşturulurken hata:', error);
+                 console.error('❌❌❌ Error stack:', error.stack);
              }
          }
          
@@ -5065,6 +5112,7 @@
 
                  // Trading modalını aç - İyileştirilmiş
          function openTradingModal(coinId, coinName, currentPrice, direction = 'buy') {
+             console.log('🚀🚀🚀 MODAL AÇILIYOR!', { coinId, coinName, currentPrice, direction });
              const modal = document.getElementById('tradingModal');
              
              // Modal animasyonu başlat
@@ -5118,6 +5166,7 @@
              
              // Chart.js grafiğini başlat
              setTimeout(() => {
+                 console.log('📊📊📊 Chart başlatılıyor...');
                  initTradingChart();
             }, 800); // Modal tamamen açıldıktan sonra
          }

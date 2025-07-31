@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trading Dashboard - GlobalTradePro - VERSION 2025-01-29 16:45 🔥</title>
+    <title>Trading Dashboard - GlobalTradePro</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Chart.js CDN - Latest Version -->
@@ -1346,22 +1346,19 @@
         }
         
         .coin-price-info-left .current-price {
-            font-size: 60px !important;
-            font-weight: 900 !important;
-            color: #00ff00 !important;
+            font-size: 36px !important;
+            font-weight: 700 !important;
+            color: #ffffff !important;
             text-shadow: 0 2px 10px rgba(255, 255, 255, 0.2) !important;
-            background: #ff0000 !important;
-            padding: 10px !important;
-            border-radius: 10px !important;
+            margin-bottom: 8px !important;
         }
         
         .coin-price-info-left .price-change {
-            font-size: 20px !important;
-            font-weight: 700 !important;
-            padding: 8px 16px !important;
-            border-radius: 8px !important;
+            font-size: 16px !important;
+            font-weight: 600 !important;
+            padding: 6px 12px !important;
+            border-radius: 6px !important;
             width: fit-content !important;
-            box-shadow: 0 4px 15px rgba(0, 230, 118, 0.3) !important;
         }
         
         .price-stats {
@@ -1383,11 +1380,18 @@
             font-weight: 600;
         }
         
-        .stat-value {
-            font-size: 18px !important;
-            font-weight: 700 !important;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+                .stat-value {
+            font-size: 16px !important;
+            font-weight: 600 !important;
         }
+        
+        .stat-value.positive {
+            color: #00d4aa !important;
+        }
+        
+        .stat-value.negative {
+            color: #ff6b6b !important;
+         }
          
          .coin-price-section {
              display: flex;
@@ -2214,7 +2218,7 @@
           .coin-chart-section {
               width: 100% !important;
               margin-top: 15px !important;
-          }
+           }
            
            .coin-price-section {
                width: 100% !important;
@@ -3559,26 +3563,18 @@
                                     <!-- Chart.js büyük boyutla sağ tarafa -->
                                     <div class="coin-chart-section">
                                         <div id="chart-container" style="
-                                            width: 400px !important; 
-                                            height: 250px !important; 
-                                            background: #ff0000 !important;
-                                            border: 5px solid #00ff00 !important;
-                                            border-radius: 20px !important;
+                                            width: 320px !important; 
+                                            height: 180px !important; 
+                                            background: rgba(255, 255, 255, 0.03) !important;
+                                            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+                                            border-radius: 12px !important;
                                             position: relative !important;
-                                            overflow: visible !important;
-                                            padding: 20px !important;
-                                            margin: 20px !important;
-                                            box-shadow: 0 0 50px #ff0000 !important;
-                                            z-index: 9999 !important;
+                                            overflow: hidden !important;
+                                            padding: 12px !important;
+                                            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
                                         ">
                                             <canvas id="tradingChart" style="width: 100%; height: 100%;"></canvas>
-                                            <!-- Debug mesajı -->
-                                            <div id="chart-debug" style="position: absolute; top: 10px; left: 10px; color: #ffffff; font-size: 20px; z-index: 10000; background: #000000; padding: 10px;">
-                                                🔥 VERSION 29-01-2025 16:45 🔥
-                                            </div>
-                                            <div style="position: absolute; top: 50px; left: 10px; color: #ff0000; font-size: 24px; z-index: 10001; background: #ffff00; padding: 10px;">
-                                                ⚠️ YENİ LAYOUT AKTIF! ⚠️
-                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -4315,37 +4311,25 @@
          
          // Sayfa yüklendiğinde Chart.js'in hazır olduğunu garanti et
          window.addEventListener('load', function() {
-             console.log('📊 Sayfa yüklendi, Chart.js hazır:', typeof Chart !== 'undefined');
+            // Chart.js hazır
          });
          
-                 function initTradingChart() {
-            console.log('🚀🚀🚀 initTradingChart çağrıldı!');
-            
-            // Chart container'ı kontrol et
-            const chartContainer = document.getElementById('chart-container');
-            console.log('📦 Chart container:', chartContainer);
-            
-            // Chart.js yüklenmiş mi kontrol et
-            if (typeof Chart === 'undefined') {
-                console.error('❌❌❌ Chart.js yüklenmemiş!');
-                setTimeout(initTradingChart, 1000); // 1 saniye bekle ve tekrar dene
-                return;
-            }
-            
-            const ctx = document.getElementById('tradingChart');
-            console.log('📊 Canvas element:', ctx);
-            if (!ctx) {
-                console.error('❌❌❌ tradingChart canvas bulunamadı!');
-                return;
-            }
-            
-            console.log('✅✅✅ Chart.js yüklendi, canvas bulundu, container bulundu!');
-            
-            // Eğer önceki chart varsa yok et
-            if (tradingChart) {
-                console.log('🔄 Önceki chart yok ediliyor...');
-                tradingChart.destroy();
-            }
+         function initTradingChart() {
+             // Chart.js yüklenmiş mi kontrol et
+             if (typeof Chart === 'undefined') {
+                 setTimeout(initTradingChart, 1000); // 1 saniye bekle ve tekrar dene
+                 return;
+             }
+             
+             const ctx = document.getElementById('tradingChart');
+             if (!ctx) {
+                 return;
+             }
+             
+             // Eğer önceki chart varsa yok et
+             if (tradingChart) {
+                 tradingChart.destroy();
+             }
              
                          // Sahte veri oluştur (büyük grafik için)
              const data = [];
@@ -4415,13 +4399,9 @@
              // Chart'ı oluştur
              try {
                  tradingChart = new Chart(ctx, config);
-                console.log('✅ Chart başarıyla oluşturuldu ve veri yüklendi');
-                
-                // Chart'ı render et
                 tradingChart.update();
-                 
              } catch (error) {
-                 console.error('❌ Chart oluşturulurken hata:', error);
+                console.error('Chart oluşturulurken hata:', error);
              }
          }
          
@@ -4467,39 +4447,34 @@
              `;
          }
 
-                         // Trading modalını aç - İyileştirilmiş
-        function openTradingModal(coinId, coinName, currentPrice, direction = 'buy') {
-            console.log('🚀 MODAL AÇILIYOR!', { coinId, coinName, currentPrice });
-            
-            const modal = document.getElementById('tradingModal');
-            console.log('📦 Modal element:', modal);
-            
-            // Modal animasyonu başlat
-            modal.style.display = 'flex';
-            requestAnimationFrame(() => {
-                const container = modal.querySelector('.modal-container');
-                container.style.transform = 'scale(1)';
-                container.style.opacity = '1';
-            });
-            
-            // Coin bilgilerini modal'a yükle
-            console.log('💰 Coin bilgileri güncelleniyor...');
-            document.getElementById('modalCoinName').textContent = coinName;
-            document.getElementById('modalCoinSymbol').textContent = coinId.toUpperCase();
-            document.getElementById('modalCoinPrice').textContent = `$${parseFloat(currentPrice).toLocaleString()}`;
-            console.log('💰 Fiyat güncellendi:', document.getElementById('modalCoinPrice').textContent);
-            
-            // Gerçekçi değişim % hesapla
-            const change = (Math.random() - 0.5) * 10;
-            const changeElement = document.getElementById('modalCoinChange');
-            changeElement.textContent = `${change >= 0 ? '+' : ''}${change.toFixed(2)}%`;
-            changeElement.className = `price-change ${change >= 0 ? 'positive' : 'negative'}`;
-            
-                        // Al/Sat fiyatlarını güncelle
-            const buyPrice = parseFloat(currentPrice) * 30 * 1.001; // 0.1% spread
-            const sellPrice = parseFloat(currentPrice) * 30 * 0.999;
-            document.getElementById('buyPrice').textContent = `₺${buyPrice.toFixed(2)}`;
-            document.getElementById('sellPrice').textContent = `₺${sellPrice.toFixed(2)}`;
+                 // Trading modalını aç - İyileştirilmiş
+         function openTradingModal(coinId, coinName, currentPrice, direction = 'buy') {
+             const modal = document.getElementById('tradingModal');
+             
+             // Modal animasyonu başlat
+             modal.style.display = 'flex';
+             requestAnimationFrame(() => {
+                 const container = modal.querySelector('.modal-container');
+                 container.style.transform = 'scale(1)';
+                 container.style.opacity = '1';
+             });
+             
+             // Coin bilgilerini modal'a yükle
+             document.getElementById('modalCoinName').textContent = coinName;
+             document.getElementById('modalCoinSymbol').textContent = coinId.toUpperCase();
+             document.getElementById('modalCoinPrice').textContent = `$${parseFloat(currentPrice).toLocaleString()}`;
+             
+             // Gerçekçi değişim % hesapla
+             const change = (Math.random() - 0.5) * 10;
+             const changeElement = document.getElementById('modalCoinChange');
+             changeElement.textContent = `${change >= 0 ? '+' : ''}${change.toFixed(2)}%`;
+             changeElement.className = `price-change ${change >= 0 ? 'positive' : 'negative'}`;
+             
+             // Al/Sat fiyatlarını güncelle
+             const buyPrice = parseFloat(currentPrice) * 30 * 1.001; // 0.1% spread
+             const sellPrice = parseFloat(currentPrice) * 30 * 0.999;
+             document.getElementById('buyPrice').textContent = `₺${buyPrice.toFixed(2)}`;
+             document.getElementById('sellPrice').textContent = `₺${sellPrice.toFixed(2)}`;
             
             // 24H Yüksek/Düşük sahte verilerini güncelle
             const basePrice = parseFloat(currentPrice);
@@ -4507,30 +4482,29 @@
             const low = basePrice * (0.85 - Math.random() * 0.15); // -15% ile -5% arası
             document.getElementById('modalCoinHigh').textContent = `$${Math.round(high).toLocaleString()}`;
             document.getElementById('modalCoinLow').textContent = `$${Math.round(low).toLocaleString()}`;
-            
-            // Quantity suffix'i güncelle
-            document.getElementById('quantitySuffix').textContent = coinId.toUpperCase();
-            document.getElementById('executeText').textContent = `${coinId.toUpperCase()} Al`;
              
-            // Modal'ı göster
-            modal.style.display = 'flex';
-            
-            // Modal açılma animasyonu
-            setTimeout(() => {
-                const container = modal.querySelector('.modal-container');
-                container.style.transform = 'scale(1)';
-                container.style.opacity = '1';
-            }, 10);
-            
-            // Trading modalı için event listener'ları kurulum
-            setupTradingModalEvents();
-            
-            // Chart.js grafiğini başlat
-            console.log('📊 Chart başlatılıyor...');
-            setTimeout(() => {
-                initTradingChart();
-            }, 1000); // Modal tamamen açıldıktan sonra - daha uzun bekleme
-        }
+             // Quantity suffix'i güncelle
+             document.getElementById('quantitySuffix').textContent = coinId.toUpperCase();
+             document.getElementById('executeText').textContent = `${coinId.toUpperCase()} Al`;
+             
+             // Modal'ı göster
+             modal.style.display = 'flex';
+             
+             // Modal açılma animasyonu
+             setTimeout(() => {
+                 const container = modal.querySelector('.modal-container');
+                 container.style.transform = 'scale(1)';
+                 container.style.opacity = '1';
+             }, 10);
+             
+             // Trading modalı için event listener'ları kurulum
+             setupTradingModalEvents();
+             
+             // Chart.js grafiğini başlat
+             setTimeout(() => {
+                 initTradingChart();
+            }, 800); // Modal tamamen açıldıktan sonra
+         }
 
          // Trading modalını kapat
          function closeTradingModal() {

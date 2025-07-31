@@ -6,6 +6,8 @@
     <title>Trading Dashboard - GlobalTradePro</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         * {
             margin: 0;
@@ -2158,6 +2160,12 @@
                height: 65px !important;
            }
            
+           #chart-container {
+               height: 250px !important;
+               padding: 0 20px !important;
+               margin: 16px 0 !important;
+           }
+           
            .coin-main-info {
                gap: 16px !important;
            }
@@ -3478,8 +3486,13 @@
                                             </div>
                                         </div>
                                     </div>
-                            </div>
-                            
+                                </div>
+                                
+                                <!-- Chart Container -->
+                                <div id="chart-container" style="width: 100%; height: 300px; margin: 20px 0; padding: 0 32px;">
+                                    <canvas id="tradingChart"></canvas>
+                                </div>
+                                
                                 <!-- Trading Tabs -->
                                 <div class="modern-trading-tabs">
                                     <button class="modern-tab active" data-tab="spot">
@@ -4244,7 +4257,119 @@
                  currentPrice = newPrice; // Base fiyatı güncelle
              }, 3500);
          }
-
+         
+         // Chart.js ile animasyonlu grafik oluştur
+         let tradingChart = null;
+         
+         function initTradingChart() {
+             const ctx = document.getElementById('tradingChart');
+             if (!ctx) return;
+             
+             // Eğer önceki chart varsa yok et
+             if (tradingChart) {
+                 tradingChart.destroy();
+             }
+             
+             // Sahte veri oluştur (sadece 1 dataset)
+             const data = [];
+             let prev = 100;
+             for (let i = 0; i < 100; i++) { // 1000 yerine 100 nokta (daha smooth animasyon)
+                 prev += 5 - Math.random() * 10;
+                 data.push({x: i, y: prev});
+             }
+             
+             // Chart.js konfigürasyonu
+             const config = {
+                 type: 'line',
+                 data: {
+                     datasets: [{
+                         label: 'Fiyat Hareketi',
+                         data: [],
+                         borderColor: '#00E676',
+                         backgroundColor: 'rgba(0, 230, 118, 0.1)',
+                         borderWidth: 2,
+                         fill: true,
+                         tension: 0.4,
+                         pointRadius: 0,
+                         pointHoverRadius: 4,
+                     }]
+                 },
+                 options: {
+                     responsive: true,
+                     maintainAspectRatio: false,
+                     plugins: {
+                         legend: {
+                             display: false
+                         }
+                     },
+                     scales: {
+                         x: {
+                             type: 'linear',
+                             display: true,
+                             grid: {
+                                 color: 'rgba(255, 255, 255, 0.1)',
+                                 drawBorder: false
+                             },
+                             ticks: {
+                                 color: 'rgba(255, 255, 255, 0.6)',
+                                 font: {
+                                     size: 12
+                                 }
+                             }
+                         },
+                         y: {
+                             display: true,
+                             grid: {
+                                 color: 'rgba(255, 255, 255, 0.1)',
+                                 drawBorder: false
+                             },
+                             ticks: {
+                                 color: 'rgba(255, 255, 255, 0.6)',
+                                 font: {
+                                     size: 12
+                                 }
+                             }
+                         }
+                     },
+                     animation: {
+                         duration: 0 // Kendi animasyonumuzu kullanacağız
+                     },
+                     interaction: {
+                         intersect: false,
+                         mode: 'index'
+                     }
+                 }
+             };
+             
+             // Chart'ı oluştur
+             tradingChart = new Chart(ctx, config);
+             
+             // Animasyonlu veri ekleme (10 saniye boyunca)
+             const animationDuration = 10000; // 10 saniye
+             const intervalTime = animationDuration / data.length; // Her nokta için süre
+             let currentIndex = 0;
+             
+             const addDataPoint = () => {
+                 if (currentIndex < data.length) {
+                     tradingChart.data.datasets[0].data.push(data[currentIndex]);
+                     tradingChart.update('none'); // Animasyon olmadan güncelle
+                     currentIndex++;
+                     setTimeout(addDataPoint, intervalTime);
+                 }
+             };
+             
+             // İlk noktayı ekle ve animasyonu başlat
+             setTimeout(addDataPoint, 500);
+         }
+         
+         // Modal kapanırken chart'ı temizle
+         function destroyTradingChart() {
+             if (tradingChart) {
+                 tradingChart.destroy();
+                 tradingChart = null;
+             }
+         }
+         
          // Coin bulunamadı mesajı
          function showNoCoinsMessage(searchInput) {
              const marketLoader = document.getElementById('marketLoader');
@@ -4329,6 +4454,11 @@
              setTimeout(() => {
                  startRealisticChartAnimation(coinId, currentPrice);
              }, 400); // Modal açılma animasyonu tamamlandıktan sonra
+             
+             // Chart.js grafiğini başlat
+             setTimeout(() => {
+                 initTradingChart();
+             }, 600); // Modal tamamen açıldıktan sonra
          }
 
          // Trading modalını kapat
@@ -4338,6 +4468,9 @@
              
              // Chart animasyonunu durdur
              stopChartAnimation();
+             
+             // Chart.js grafiğini temizle
+             destroyTradingChart();
              
              container.style.transform = 'scale(0.95)';
              container.style.opacity = '0';

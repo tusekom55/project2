@@ -3865,10 +3865,102 @@
                 <section class="content-section" id="portfolio">
                     <div class="section-header">
                         <h2 class="section-title">Portföyüm</h2>
-                        <p class="section-subtitle">Sahip olduğunuz varlıklar</p>
+                        <p class="section-subtitle">Sahip olduğunuz kripto varlıklar ve performansları</p>
                     </div>
+                    
+                    <!-- Portföy Özeti -->
+                    <div class="grid grid-4">
+                        <div class="card stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-wallet" style="color: #00d4aa;"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h4 class="stat-value" id="portfolioTotalValue">₺0</h4>
+                                <p class="stat-label">Toplam Portföy Değeri</p>
+                            </div>
+                        </div>
+                        
+                        <div class="card stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-chart-line" style="color: #ffa726;"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h4 class="stat-value" id="portfolioProfitLoss">₺0</h4>
+                                <p class="stat-label">Toplam Kar/Zarar</p>
+                            </div>
+                        </div>
+                        
+                        <div class="card stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-percentage" style="color: #42a5f5;"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h4 class="stat-value" id="portfolioProfitPercent">0%</h4>
+                                <p class="stat-label">Kar/Zarar Oranı</p>
+                            </div>
+                        </div>
+                        
+                        <div class="card stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-coins" style="color: #ab47bc;"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h4 class="stat-value" id="portfolioCoinCount">0</h4>
+                                <p class="stat-label">Coin Sayısı</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Portföy Listesi -->
                     <div class="card">
-                        <p>Portföy içeriği yakında eklenecek...</p>
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-list" style="color: #00d4aa;"></i>
+                                Varlık Listesi
+                            </h3>
+                            <button class="btn-secondary" onclick="loadPortfolio()" style="padding: 8px 16px;">
+                                <i class="fas fa-refresh"></i> Yenile
+                            </button>
+                        </div>
+                        
+                        <!-- Loading State -->
+                        <div id="portfolioLoader" class="loading" style="display: none; text-align: center; padding: 40px;">
+                            <div class="spinner"></div>
+                            <p>Portföy yükleniyor...</p>
+                        </div>
+                        
+                        <!-- Empty State -->
+                        <div id="portfolioEmpty" style="display: none; text-align: center; padding: 60px 20px; color: #8b8fa3;">
+                            <i class="fas fa-inbox" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;"></i>
+                            <h3 style="color: #ffffff; margin-bottom: 12px;">Portföyünüz Boş</h3>
+                            <p style="margin-bottom: 24px;">Henüz hiç coin satın almamışsınız. Piyasalar sayfasından coin alım-satımı yapabilirsiniz.</p>
+                            <button onclick="showSection('markets')" style="background: #00d4aa; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;">
+                                <i class="fas fa-shopping-cart"></i> Coin Satın Al
+                            </button>
+                        </div>
+                        
+                        <!-- Portfolio Table -->
+                        <div id="portfolioTable" style="display: none;">
+                            <div class="table-responsive">
+                                <table class="modern-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Varlık</th>
+                                            <th>Miktar</th>
+                                            <th>Ortalama Fiyat</th>
+                                            <th>Güncel Fiyat</th>
+                                            <th>Değer</th>
+                                            <th>Kar/Zarar</th>
+                                            <th>%</th>
+                                            <th>İşlemler</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="portfolioTableBody">
+                                        <!-- Portfolio items will be inserted here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </section>
 
@@ -4655,6 +4747,10 @@
                     // Section-specific loading
                     if (targetSection === 'deposit') {
                         loadRecentDeposits();
+                    } else if (targetSection === 'portfolio') {
+                        loadPortfolio();
+                    } else if (targetSection === 'profile') {
+                        loadTransactionHistory();
                     }
                 });
             });
@@ -4760,64 +4856,147 @@
         }
 
         // İşlem geçmişi yükle
-        function loadTransactionHistory() {
+        async function loadTransactionHistory() {
             const historyContainer = document.getElementById('transactionHistory');
             
-            // Simüle edilmiş işlem geçmişi
-            const transactions = [
-                {
-                    type: 'BTC Alış',
-                    details: 'Bitcoin 0.05 BTC @ $45,000',
-                    amount: '+₺2,250',
-                    date: '2024-01-15 14:30',
-                    isPositive: true
-                },
-                {
-                    type: 'ETH Satış',
-                    details: 'Ethereum 0.5 ETH @ $3,200',
-                    amount: '+₺1,600',
-                    date: '2024-01-14 09:15',
-                    isPositive: true
-                },
-                {
-                    type: 'Para Yatırma',
-                    details: 'Kredi Kartı ile yatırma',
-                    amount: '+₺5,000',
-                    date: '2024-01-12 16:45',
-                    isPositive: true
-                },
-                {
-                    type: 'ADA Alış',
-                    details: 'Cardano 100 ADA @ $0.50',
-                    amount: '-₺50',
-                    date: '2024-01-10 11:20',
-                    isPositive: false
-                },
-                {
-                    type: 'DOT Satış',
-                    details: 'Polkadot 10 DOT @ $7.50',
-                    amount: '+₺75',
-                    date: '2024-01-08 13:45',
-                    isPositive: true
+            // Loading state göster
+            historyContainer.innerHTML = `
+                <div class="loading" style="text-align: center; padding: 40px;">
+                    <div class="spinner"></div>
+                    <p>İşlem geçmişi yükleniyor...</p>
+                </div>
+            `;
+            
+            try {
+                const response = await fetch('backend/user/transaction_history.php?action=list&limit=20', {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                
+                const result = await response.json();
+                console.log('✅ Transaction history loaded:', result);
+                
+                if (result.success && result.data.transactions) {
+                    displayTransactionHistory(result.data);
+                } else {
+                    // Boş durum
+                    historyContainer.innerHTML = `
+                        <div style="text-align: center; padding: 60px 20px; color: #8b8fa3;">
+                            <i class="fas fa-history" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;"></i>
+                            <h3 style="color: #ffffff; margin-bottom: 12px;">Henüz İşlem Yok</h3>
+                            <p>Henüz hiç işlem yapmamışsınız. İlk işleminizi yapmak için piyasalar sayfasını ziyaret edin.</p>
+                        </div>
+                    `;
                 }
-            ];
+                
+                // İstatistikleri güncelle
+                if (result.data.stats) {
+                    updateProfileStats(result.data.stats);
+                }
+                
+            } catch (error) {
+                console.error('Transaction history loading error:', error);
+                historyContainer.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #ef4444;">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 24px; margin-bottom: 12px;"></i><br>
+                        İşlem geçmişi yüklenirken hata oluştu.<br>
+                        <button onclick="loadTransactionHistory()" style="background: #4fc3f7; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; margin-top: 12px;">
+                            Tekrar Dene
+                        </button>
+                    </div>
+                `;
+            }
+        }
+        
+        // İşlem geçmişini göster
+        function displayTransactionHistory(data) {
+            const historyContainer = document.getElementById('transactionHistory');
+            const transactions = data.transactions;
+            
+            if (!transactions || transactions.length === 0) {
+                historyContainer.innerHTML = `
+                    <div style="text-align: center; padding: 60px 20px; color: #8b8fa3;">
+                        <i class="fas fa-history" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;"></i>
+                        <h3 style="color: #ffffff; margin-bottom: 12px;">İşlem Geçmişi Boş</h3>
+                        <p>Henüz hiç işlem yapmamışsınız.</p>
+                    </div>
+                `;
+                return;
+            }
             
             let historyHTML = '';
             transactions.forEach(transaction => {
+                const isPositive = parseFloat(transaction.amount) > 0;
+                const amount = parseFloat(transaction.amount);
+                const formattedAmount = (isPositive ? '+' : '') + '₺' + Math.abs(amount).toLocaleString('tr-TR', { minimumFractionDigits: 2 });
+                
+                // İşlem tipine göre icon belirle
+                let icon = 'fas fa-exchange-alt';
+                let iconColor = '#4fc3f7';
+                
+                if (transaction.type === 'coin_trade') {
+                    icon = transaction.sub_type === 'al' ? 'fas fa-arrow-down' : 'fas fa-arrow-up';
+                    iconColor = transaction.sub_type === 'al' ? '#00d4aa' : '#ef4444';
+                } else if (transaction.type === 'deposit') {
+                    icon = 'fas fa-plus-circle';
+                    iconColor = '#00d4aa';
+                } else if (transaction.type === 'withdrawal') {
+                    icon = 'fas fa-minus-circle';
+                    iconColor = '#ef4444';
+                }
+                
+                // Status badge
+                let statusBadge = '';
+                if (transaction.sub_type === 'beklemede') {
+                    statusBadge = '<span class="status-badge pending">Beklemede</span>';
+                } else if (transaction.sub_type === 'onaylandi' || transaction.sub_type === 'al' || transaction.sub_type === 'sat') {
+                    statusBadge = '<span class="status-badge approved">Tamamlandı</span>';
+                } else if (transaction.sub_type === 'reddedildi') {
+                    statusBadge = '<span class="status-badge rejected">Reddedildi</span>';
+                }
+                
                 historyHTML += `
-                    <div class="transaction-item">
-                        <div class="transaction-info">
-                            <div class="transaction-type">${transaction.type}</div>
-                            <div class="transaction-details">${transaction.details} • ${transaction.date}</div>
+                    <div class="transaction-item" style="display: flex; align-items: center; justify-content: space-between; padding: 16px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                        <div style="display: flex; align-items: center; gap: 16px;">
+                            <div style="width: 40px; height: 40px; background: rgba(${iconColor.substring(1, 3)}, ${iconColor.substring(3, 5)}, ${iconColor.substring(5, 7)}, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                <i class="${icon}" style="color: ${iconColor}; font-size: 16px;"></i>
+                            </div>
+                            <div class="transaction-info">
+                                <div class="transaction-type" style="font-weight: 600; color: #ffffff; margin-bottom: 4px;">
+                                    ${transaction.description}
+                                </div>
+                                <div class="transaction-details" style="font-size: 12px; color: #8b8fa3;">
+                                    ${new Date(transaction.date).toLocaleDateString('tr-TR', { 
+                                        year: 'numeric', 
+                                        month: 'short', 
+                                        day: 'numeric', 
+                                        hour: '2-digit', 
+                                        minute: '2-digit' 
+                                    })}
+                                    ${statusBadge}
+                                </div>
+                            </div>
                         </div>
-                        <div class="transaction-amount ${transaction.isPositive ? 'positive' : 'negative'}">
-                            ${transaction.amount}
+                        <div class="transaction-amount" style="font-weight: 600; color: ${isPositive ? '#00d4aa' : '#ef4444'};">
+                            ${formattedAmount}
                         </div>
                     </div>
                 `;
             });
             
             historyContainer.innerHTML = historyHTML;
+        }
+        
+        // Profil istatistiklerini güncelle
+        function updateProfileStats(stats) {
+            if (stats.total_trades) {
+                document.getElementById('totalTrades').textContent = stats.total_trades;
+            }
+            
+            // Kar/zarar hesapla (gelecekte portföy verisi ile)
+            const profitLoss = (stats.total_sell_amount || 0) - (stats.total_buy_amount || 0);
+            document.getElementById('profitLoss').textContent = `₺${profitLoss.toLocaleString('tr-TR')}`;
+            document.getElementById('profitLoss').style.color = profitLoss >= 0 ? '#00d4aa' : '#ef4444';
         }
 
         // Çıkış yap
@@ -5199,10 +5378,142 @@
              }
          }
          
-         // refreshMarketData alias - geriye uyumluluk için
-         function refreshMarketData() {
-             return fetchMarketData();
-         }
+                 // refreshMarketData alias - geriye uyumluluk için
+        function refreshMarketData() {
+            return fetchMarketData();
+        }
+        
+        // Portföy yükle
+        async function loadPortfolio() {
+            const loader = document.getElementById('portfolioLoader');
+            const empty = document.getElementById('portfolioEmpty');
+            const table = document.getElementById('portfolioTable');
+            
+            // Loading state göster
+            loader.style.display = 'block';
+            empty.style.display = 'none';
+            table.style.display = 'none';
+            
+            try {
+                const response = await fetch('backend/user/trading.php?action=portfolio', {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                
+                const result = await response.json();
+                console.log('✅ Portfolio loaded:', result);
+                
+                if (result.success && result.data.portfolio.length > 0) {
+                    displayPortfolio(result.data);
+                } else {
+                    // Portföy boş
+                    loader.style.display = 'none';
+                    empty.style.display = 'block';
+                    
+                    // Sıfır değerleri göster
+                    document.getElementById('portfolioTotalValue').textContent = '₺0';
+                    document.getElementById('portfolioProfitLoss').textContent = '₺0';
+                    document.getElementById('portfolioProfitPercent').textContent = '0%';
+                    document.getElementById('portfolioCoinCount').textContent = '0';
+                }
+                
+            } catch (error) {
+                console.error('Portfolio loading error:', error);
+                loader.style.display = 'none';
+                empty.style.display = 'none';
+                table.style.display = 'block';
+                
+                document.getElementById('portfolioTableBody').innerHTML = `
+                    <tr>
+                        <td colspan="8" style="text-align: center; padding: 40px; color: #ef4444;">
+                            <i class="fas fa-exclamation-triangle" style="font-size: 24px; margin-bottom: 12px;"></i><br>
+                            Portföy verilerini yüklerken hata oluştu.<br>
+                            <button onclick="loadPortfolio()" style="background: #4fc3f7; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; margin-top: 12px;">
+                                Tekrar Dene
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+        
+        // Portföy verilerini göster
+        function displayPortfolio(data) {
+            const loader = document.getElementById('portfolioLoader');
+            const table = document.getElementById('portfolioTable');
+            const tbody = document.getElementById('portfolioTableBody');
+            
+            // Loading'i gizle, tabloyu göster
+            loader.style.display = 'none';
+            table.style.display = 'block';
+            
+            // Özet bilgilerini güncelle
+            const summary = data.summary;
+            document.getElementById('portfolioTotalValue').textContent = `₺${summary.total_value.toLocaleString('tr-TR', {minimumFractionDigits: 2})}`;
+            document.getElementById('portfolioProfitLoss').textContent = `₺${summary.total_profit_loss.toLocaleString('tr-TR', {minimumFractionDigits: 2})}`;
+            document.getElementById('portfolioProfitPercent').textContent = `${summary.total_profit_loss_percent.toFixed(2)}%`;
+            document.getElementById('portfolioCoinCount').textContent = summary.coin_count;
+            
+            // Profit/Loss rengini ayarla
+            const profitElement = document.getElementById('portfolioProfitLoss');
+            const percentElement = document.getElementById('portfolioProfitPercent');
+            const profitClass = summary.total_profit_loss >= 0 ? 'positive' : 'negative';
+            profitElement.style.color = summary.total_profit_loss >= 0 ? '#00d4aa' : '#ef4444';
+            percentElement.style.color = summary.total_profit_loss >= 0 ? '#00d4aa' : '#ef4444';
+            
+            // Tablo içeriğini oluştur
+            tbody.innerHTML = '';
+            
+            data.portfolio.forEach(item => {
+                const profitLossClass = item.profit_loss >= 0 ? 'positive' : 'negative';
+                const profitLossColor = item.profit_loss >= 0 ? '#00d4aa' : '#ef4444';
+                const logoUrl = item.logo_url || `https://via.placeholder.com/32/4fc3f7/ffffff?text=${item.coin_kodu.charAt(0)}`;
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <img src="${logoUrl}" alt="${item.coin_adi}" 
+                                 style="width: 32px; height: 32px; border-radius: 50%;"
+                                 onerror="this.src='https://via.placeholder.com/32/4fc3f7/ffffff?text=${item.coin_kodu.charAt(0)}'">
+                            <div>
+                                <div style="font-weight: 600; color: #ffffff;">${item.coin_adi}</div>
+                                <div style="font-size: 12px; color: #8b8fa3;">${item.coin_kodu}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="font-family: monospace;">${parseFloat(item.net_miktar).toFixed(6)}</td>
+                    <td>₺${parseFloat(item.avg_buy_price).toLocaleString('tr-TR', {minimumFractionDigits: 2})}</td>
+                    <td>₺${parseFloat(item.current_price).toLocaleString('tr-TR', {minimumFractionDigits: 2})}</td>
+                    <td style="font-weight: 600;">₺${parseFloat(item.current_value).toLocaleString('tr-TR', {minimumFractionDigits: 2})}</td>
+                    <td style="color: ${profitLossColor}; font-weight: 600;">
+                        ${item.profit_loss >= 0 ? '+' : ''}₺${parseFloat(item.profit_loss).toLocaleString('tr-TR', {minimumFractionDigits: 2})}
+                    </td>
+                    <td style="color: ${profitLossColor}; font-weight: 600;">
+                        ${item.profit_loss_percent >= 0 ? '+' : ''}${parseFloat(item.profit_loss_percent).toFixed(2)}%
+                    </td>
+                    <td>
+                        <div style="display: flex; gap: 8px;">
+                            <button onclick="openTradingModal('${item.coin_id}', '${item.coin_adi}', '${item.current_price}', 'buy', '${item.coin_kodu}')" 
+                                    style="background: #00d4aa; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;">
+                                <i class="fas fa-plus"></i> Al
+                            </button>
+                            <button onclick="openTradingModal('${item.coin_id}', '${item.coin_adi}', '${item.current_price}', 'sell', '${item.coin_kodu}')" 
+                                    style="background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;">
+                                <i class="fas fa-minus"></i> Sat
+                            </button>
+                        </div>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+            
+            // Başarı mesajı göster
+            if (typeof showNotification === 'function') {
+                showNotification(`Portföy yüklendi: ${summary.coin_count} farklı varlık`, 'success');
+            }
+        }
          
          // API durum bilgisini göster
          function showApiStatusInfo(totalCount, apiActiveCount) {
@@ -5664,59 +5975,81 @@
              }
          }
 
-                 // Trading modalını aç - İyileştirilmiş
-         function openTradingModal(coinId, coinName, currentPrice, direction = 'buy') {
-             console.log('🚀🚀🚀 MODAL AÇILIYOR!', { coinId, coinName, currentPrice, direction });
-             const modal = document.getElementById('tradingModal');
-             
-             // Modal animasyonu başlat
-             modal.style.display = 'flex';
-             requestAnimationFrame(() => {
-                 const container = modal.querySelector('.modal-container');
-                 container.style.transform = 'scale(1)';
-                 container.style.opacity = '1';
-             });
-             
-             // Coin bilgilerini modal'a yükle
-             document.getElementById('modalCoinName').textContent = coinName;
-             document.getElementById('modalCoinSymbol').textContent = coinId.toUpperCase();
-             document.getElementById('modalCoinPrice').textContent = `$${parseFloat(currentPrice).toLocaleString()}`;
-             
-             // Gerçekçi değişim % hesapla
-             const change = (Math.random() - 0.5) * 10;
-             const changeElement = document.getElementById('modalCoinChange');
-             changeElement.textContent = `${change >= 0 ? '+' : ''}${change.toFixed(2)}%`;
-             changeElement.className = `price-change ${change >= 0 ? 'positive' : 'negative'}`;
-             
-             // Al/Sat fiyatlarını güncelle
-             const buyPrice = parseFloat(currentPrice) * 30 * 1.001; // 0.1% spread
-             const sellPrice = parseFloat(currentPrice) * 30 * 0.999;
-             document.getElementById('buyPrice').textContent = `₺${buyPrice.toFixed(2)}`;
-             document.getElementById('sellPrice').textContent = `₺${sellPrice.toFixed(2)}`;
+                                  // Trading modalını aç - İyileştirilmiş
+        function openTradingModal(coinId, coinName, currentPrice, direction = 'buy', coinSymbol = '') {
+            console.log('🚀 TRADING MODAL AÇILIYOR!', { coinId, coinName, currentPrice, direction, coinSymbol });
+            const modal = document.getElementById('tradingModal');
             
-            // 24H Yüksek/Düşük sahte verilerini güncelle
-            const basePrice = parseFloat(currentPrice);
-            const high = basePrice * (1.05 + Math.random() * 0.15); // +5% ile +20% arası
-            const low = basePrice * (0.85 - Math.random() * 0.15); // -15% ile -5% arası
-            document.getElementById('modalCoinHigh').textContent = `$${Math.round(high).toLocaleString()}`;
-            document.getElementById('modalCoinLow').textContent = `$${Math.round(low).toLocaleString()}`;
-             
-             // Quantity suffix'i güncelle
-             document.getElementById('quantitySuffix').textContent = coinId.toUpperCase();
-             document.getElementById('executeText').textContent = `${coinId.toUpperCase()} Al`;
-             
-             // Modal'ı göster
-             modal.style.display = 'flex';
-             
-             // Modal açılma animasyonu
-             setTimeout(() => {
-                 const container = modal.querySelector('.modal-container');
-                 container.style.transform = 'scale(1)';
-                 container.style.opacity = '1';
-             }, 10);
-             
-             // Trading modalı için event listener'ları kurulum
-             setupTradingModalEvents();
+            // Global değişkenlere kaydet (executeOrder için)
+            window.currentTradingCoin = {
+                id: coinId,
+                name: coinName,
+                price: parseFloat(currentPrice),
+                symbol: coinSymbol || coinName.substring(0, 3).toUpperCase()
+            };
+            
+            // Modal animasyonu başlat
+            modal.style.display = 'flex';
+            requestAnimationFrame(() => {
+                const container = modal.querySelector('.modal-container');
+                container.style.transform = 'scale(1)';
+                container.style.opacity = '1';
+            });
+            
+            // Coin bilgilerini modal'a yükle
+            document.getElementById('modalCoinName').textContent = coinName;
+            document.getElementById('modalCoinSymbol').textContent = coinSymbol || coinName.substring(0, 3).toUpperCase();
+            
+            // Fiyatı TL cinsinden göster
+            const priceInTL = parseFloat(currentPrice) * 30; // USD -> TL tahmini
+            document.getElementById('modalCoinPrice').textContent = `₺${priceInTL.toLocaleString('tr-TR', {minimumFractionDigits: 2})}`;
+            
+            // Gerçek price_change_24h kullan (coin verisinde varsa)
+            const changeElement = document.getElementById('modalCoinChange');
+            if (window.currentCoinData && window.currentCoinData.price_change_24h) {
+                const change = parseFloat(window.currentCoinData.price_change_24h);
+                changeElement.textContent = `${change >= 0 ? '+' : ''}${change.toFixed(2)}%`;
+                changeElement.className = `price-change ${change >= 0 ? 'positive' : 'negative'}`;
+            } else {
+                // Fallback
+                const change = (Math.random() - 0.5) * 10;
+                changeElement.textContent = `${change >= 0 ? '+' : ''}${change.toFixed(2)}%`;
+                changeElement.className = `price-change ${change >= 0 ? 'positive' : 'negative'}`;
+            }
+            
+            // Al/Sat fiyatlarını güncelle (0.1% spread)
+            const buyPrice = priceInTL * 1.001;
+            const sellPrice = priceInTL * 0.999;
+            document.getElementById('buyPrice').textContent = `₺${buyPrice.toFixed(2)}`;
+            document.getElementById('sellPrice').textContent = `₺${sellPrice.toFixed(2)}`;
+           
+           // 24H Yüksek/Düşük verilerini güncelle
+           const high = priceInTL * (1.05 + Math.random() * 0.15);
+           const low = priceInTL * (0.85 - Math.random() * 0.15);
+           document.getElementById('modalCoinHigh').textContent = `₺${high.toFixed(2)}`;
+           document.getElementById('modalCoinLow').textContent = `₺${low.toFixed(2)}`;
+            
+            // Quantity suffix'i güncelle
+            const symbol = coinSymbol || coinName.substring(0, 3).toUpperCase();
+            document.getElementById('quantitySuffix').textContent = symbol;
+            
+            // Direction'a göre initial text ayarla
+            const executeText = document.getElementById('executeText');
+            const executeBtn = document.getElementById('executeOrderBtn');
+            if (direction === 'buy') {
+                executeText.textContent = `${symbol} Al`;
+                executeBtn.className = 'execute-btn buy-order';
+                document.querySelector('[data-direction="buy"]').classList.add('active');
+                document.querySelector('[data-direction="sell"]').classList.remove('active');
+            } else {
+                executeText.textContent = `${symbol} Sat`;
+                executeBtn.className = 'execute-btn sell-order';
+                document.querySelector('[data-direction="sell"]').classList.add('active');
+                document.querySelector('[data-direction="buy"]').classList.remove('active');
+            }
+            
+            // Trading modalı için event listener'ları kurulum
+            setupTradingModalEvents();
              
              // Chart.js grafiğini başlat
              setTimeout(() => {
@@ -5862,28 +6195,74 @@
              executeBtn.disabled = quantity <= 0 || total <= 0;
          }
 
-         // Order'ı execute et
-         function executeOrder() {
-             const coinSymbol = document.getElementById('modalCoinSymbol').textContent;
-             const direction = document.querySelector('.direction-btn.active').dataset.direction;
-             const quantity = document.getElementById('orderQuantity').value;
-             const orderType = document.getElementById('orderType').value;
-             const total = document.getElementById('orderTotalValue').textContent;
-             
-             const directionText = direction === 'buy' ? 'ALIŞ' : 'SATIŞ';
-             const orderTypeText = orderType === 'market' ? 'Piyasa Emri' : 
-                                  orderType === 'limit' ? 'Limit Emri' : 'Stop-Limit';
-             
-             alert(`🚀 ${directionText} Emri Verildi!\n\n` +
-                   `Sembol: ${coinSymbol}\n` +
-                   `Tür: ${orderTypeText}\n` +
-                   `Miktar: ${quantity}\n` +
-                   `Toplam: ${total}\n\n` +
-                   `Emir gerçek trading sisteminde işleme alınacak.`);
-             
-             // Demo için modal'ı kapat
-             closeTradingModal();
-         }
+                 // Order'ı execute et
+        async function executeOrder() {
+            if (!window.currentTradingCoin) {
+                showNotification('Coin bilgisi bulunamadı', 'error');
+                return;
+            }
+            
+            const direction = document.querySelector('.direction-btn.active').dataset.direction;
+            const quantity = parseFloat(document.getElementById('orderQuantity').value);
+            const currentPrice = window.currentTradingCoin.price * 30; // USD -> TL
+            
+            if (!quantity || quantity <= 0) {
+                showNotification('Geçerli bir miktar giriniz', 'error');
+                return;
+            }
+            
+            // Loading state
+            const executeBtn = document.getElementById('executeOrderBtn');
+            const originalText = executeBtn.innerHTML;
+            executeBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> İşleniyor...';
+            executeBtn.disabled = true;
+            
+            try {
+                const formData = new FormData();
+                formData.append('coin_id', window.currentTradingCoin.id);
+                formData.append('miktar', quantity);
+                formData.append('fiyat', currentPrice);
+                
+                const response = await fetch(`backend/user/trading.php?action=${direction}`, {
+                    method: 'POST',
+                    credentials: 'include',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    const directionText = direction === 'buy' ? 'SATIN ALMA' : 'SATIM';
+                    const totalAmount = result.data.toplam_tutar;
+                    
+                    showNotification(
+                        `✅ ${directionText} İşlemi Başarılı!\n` +
+                        `${quantity} ${window.currentTradingCoin.symbol} - ₺${totalAmount.toLocaleString('tr-TR')}`,
+                        'success'
+                    );
+                    
+                    // Modal'ı kapat
+                    closeTradingModal();
+                    
+                    // Kullanıcı bilgilerini ve portföyü güncelle
+                    loadUserInfo();
+                    if (typeof loadPortfolio === 'function') {
+                        loadPortfolio();
+                    }
+                    
+                } else {
+                    showNotification(`❌ İşlem Hatası: ${result.message}`, 'error');
+                }
+                
+            } catch (error) {
+                console.error('Trading API Error:', error);
+                showNotification('❌ Bağlantı hatası. Lütfen tekrar deneyin.', 'error');
+            } finally {
+                // Loading state'i kaldır
+                executeBtn.innerHTML = originalText;
+                executeBtn.disabled = false;
+            }
+        }
 
                  // Sahte grafik yükle
          function loadFakeChart(symbol) {
@@ -6041,7 +6420,7 @@
                 
                 const card = document.createElement('div');
                 card.className = 'desktop-coin-card';
-                card.onclick = () => openTradingModal(coin.coin_kodu.toLowerCase(), coin.coin_adi, coin.current_price);
+                card.onclick = () => openTradingModal(coin.id, coin.coin_adi, coin.current_price, 'buy', coin.coin_kodu);
                 
                 card.innerHTML = `
                     <div class="coin-card-header">
@@ -6075,10 +6454,10 @@
                     </div>
                     
                     <div class="coin-actions">
-                        <button class="trade-btn buy" onclick="event.stopPropagation(); openTradingModal('${coin.coin_kodu.toLowerCase()}', '${coin.coin_adi}', '${coin.current_price}', 'buy')">
+                        <button class="trade-btn buy" onclick="event.stopPropagation(); openTradingModal('${coin.id}', '${coin.coin_adi}', '${coin.current_price}', 'buy', '${coin.coin_kodu}')">
                             <i class="fas fa-arrow-up"></i> Alış
                         </button>
-                        <button class="trade-btn sell" onclick="event.stopPropagation(); openTradingModal('${coin.coin_kodu.toLowerCase()}', '${coin.coin_adi}', '${coin.current_price}', 'sell')">
+                        <button class="trade-btn sell" onclick="event.stopPropagation(); openTradingModal('${coin.id}', '${coin.coin_adi}', '${coin.current_price}', 'sell', '${coin.coin_kodu}')">
                             <i class="fas fa-arrow-down"></i> Satış
                         </button>
                     </div>
@@ -6130,10 +6509,10 @@
                     </div>
                     
                     <div class="mobile-coin-actions">
-                        <button class="mobile-trade-btn buy" onclick="openTradingModal('${coin.coin_kodu.toLowerCase()}', '${coin.coin_adi}', '${coin.current_price}', 'buy')">
+                        <button class="mobile-trade-btn buy" onclick="openTradingModal('${coin.id}', '${coin.coin_adi}', '${coin.current_price}', 'buy', '${coin.coin_kodu}')">
                             <i class="fas fa-arrow-up"></i> Alış
                         </button>
-                        <button class="mobile-trade-btn sell" onclick="openTradingModal('${coin.coin_kodu.toLowerCase()}', '${coin.coin_adi}', '${coin.current_price}', 'sell')">
+                        <button class="mobile-trade-btn sell" onclick="openTradingModal('${coin.id}', '${coin.coin_adi}', '${coin.current_price}', 'sell', '${coin.coin_kodu}')">
                             <i class="fas fa-arrow-down"></i> Satış
                         </button>
                     </div>

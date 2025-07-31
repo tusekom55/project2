@@ -5134,11 +5134,20 @@
 
                  // Modern hibrit sistem - Veritabanı + API kombinasyonu
          async function fetchMarketData() {
-             const searchInput = document.getElementById('coinSearch').value.toLowerCase();
+             const searchInput = document.getElementById('coinSearch') ? document.getElementById('coinSearch').value.toLowerCase() : '';
              const marketLoader = document.getElementById('marketLoader');
 
              try {
-                 marketLoader.style.display = 'flex';
+                 // Loading state göster
+                 if (marketLoader) {
+                     marketLoader.style.display = 'flex';
+                     marketLoader.innerHTML = `
+                         <div style="text-align: center; padding: 40px;">
+                             <div style="width: 48px; height: 48px; border: 3px solid rgba(79, 195, 247, 0.3); border-top: 3px solid #4fc3f7; border-radius: 50%; margin: 0 auto 16px; animation: spin 1s linear infinite;"></div>
+                             <p style="color: #8896ab;">Piyasa verileri yükleniyor...</p>
+                         </div>
+                     `;
+                 }
                  
                  // Hibrit endpoint'den veri çek
                  const params = new URLSearchParams({
@@ -5151,25 +5160,48 @@
                      credentials: 'include'
                  });
                  
+                 if (!response.ok) {
+                     throw new Error(`API Error: ${response.status} ${response.statusText}`);
+                 }
+                 
                  const result = await response.json();
+                 console.log('✅ Market data loaded:', result);
 
-                                 if (result.success && result.coins && result.coins.length > 0) {
-                    // Modern card-based rendering kullan
-                    renderModernCoins(result.coins);
-                    
-                    // API durumu bilgisi göster (opsiyonel bilgi kutusu)
+                 if (result.success && result.coins && result.coins.length > 0) {
+                     // Modern card-based rendering kullan
+                     renderModernCoins(result.coins);
+                     
+                     // API durumu bilgisi göster (opsiyonel bilgi kutusu)
                      if (result.api_active_count > 0) {
-                        showApiStatusInfo(result.total_count, result.api_active_count);
-                    }
-                    
-                } else {
-                    showNoCoinsMessage(searchInput);
-                }
-                
+                         showApiStatusInfo(result.total_count, result.api_active_count);
+                     }
+                     
+                     // Loader'ı gizle
+                     if (marketLoader) {
+                         marketLoader.style.display = 'none';
+                     }
+                     
+                     // Başarı mesajı
+                     if (typeof showNotification === 'function') {
+                         showNotification(`${result.total_count} coin yüklendi`, 'success');
+                     }
+                     
+                 } else {
+                     showNoCoinsMessage(searchInput);
+                     if (marketLoader) {
+                         marketLoader.style.display = 'none';
+                     }
+                 }
+                 
              } catch (error) {
-                 console.error('Error fetching market data:', error);
+                 console.error('❌ Error fetching market data:', error);
                  showErrorMessage();
              }
+         }
+         
+         // refreshMarketData alias - geriye uyumluluk için
+         function refreshMarketData() {
+             return fetchMarketData();
          }
          
          // API durum bilgisini göster
@@ -5550,16 +5582,86 @@
          // Hata mesajı
          function showErrorMessage() {
              const marketLoader = document.getElementById('marketLoader');
-             marketLoader.innerHTML = `
-                 <div style="text-align: center; color: #f44336; padding: 40px;">
-                     <i class="fas fa-exclamation-triangle" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;"></i>
-                     <h3 style="color: #ffffff; margin-bottom: 12px;">Bağlantı Hatası</h3>
-                     <p style="color: #8896ab; margin-bottom: 20px;">Piyasa verileri yüklenirken hata oluştu</p>
-                     <button onclick="fetchMarketData()" style="background: #4fc3f7; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;">
-                         <i class="fas fa-retry"></i> Tekrar Dene
-                     </button>
-                 </div>
-             `;
+             if (marketLoader) {
+                 marketLoader.style.display = 'flex';
+                 marketLoader.innerHTML = `
+                     <div style="text-align: center; color: #f44336; padding: 40px;">
+                         <i class="fas fa-exclamation-triangle" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;"></i>
+                         <h3 style="color: #ffffff; margin-bottom: 12px;">Bağlantı Hatası</h3>
+                         <p style="color: #8896ab; margin-bottom: 20px;">Piyasa verileri yüklenirken hata oluştu. API bağlantısını kontrol edin.</p>
+                         <button onclick="refreshMarketData()" style="background: #4fc3f7; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; margin-right: 10px;">
+                             <i class="fas fa-redo"></i> Tekrar Dene
+                         </button>
+                         <button onclick="showMockMarketData()" style="background: #28a745; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;">
+                             <i class="fas fa-eye"></i> Demo Veriler
+                         </button>
+                     </div>
+                 `;
+             }
+             
+             // Kullanıcıya bildirim göster
+             if (typeof showNotification === 'function') {
+                 showNotification('Piyasa verileri yüklenemedi. Demo veriler gösteriliyor.', 'error');
+             }
+         }
+         
+         // Mock piyasa verileri göster
+         function showMockMarketData() {
+             const mockCoins = [
+                 {
+                     id: 1,
+                     coin_adi: 'Bitcoin',
+                     coin_kodu: 'BTC',
+                     current_price: 96480.50,
+                     price_change_24h: 2.35,
+                     market_cap: 1900000000000,
+                     logo_url: 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png'
+                 },
+                 {
+                     id: 2,
+                     coin_adi: 'Ethereum',
+                     coin_kodu: 'ETH',
+                     current_price: 3420.75,
+                     price_change_24h: -1.22,
+                     market_cap: 410000000000,
+                     logo_url: 'https://assets.coingecko.com/coins/images/279/large/ethereum.png'
+                 },
+                 {
+                     id: 3,
+                     coin_adi: 'BNB',
+                     coin_kodu: 'BNB',
+                     current_price: 685.20,
+                     price_change_24h: 0.88,
+                     market_cap: 99000000000,
+                     logo_url: 'https://assets.coingecko.com/coins/images/825/large/bnb-icon2_2x.png'
+                 },
+                 {
+                     id: 4,
+                     coin_adi: 'Solana',
+                     coin_kodu: 'SOL',
+                     current_price: 238.45,
+                     price_change_24h: 4.65,
+                     market_cap: 113000000000,
+                     logo_url: 'https://assets.coingecko.com/coins/images/4128/large/solana.png'
+                 },
+                 {
+                     id: 5,
+                     coin_adi: 'XRP',
+                     coin_kodu: 'XRP',
+                     current_price: 2.35,
+                     price_change_24h: 12.88,
+                     market_cap: 133000000000,
+                     logo_url: 'https://assets.coingecko.com/coins/images/44/large/xrp-symbol-white-128.png'
+                 }
+             ];
+             
+             renderModernCoins(mockCoins);
+             document.getElementById('marketLoader').style.display = 'none';
+             
+             // Başarı mesajı göster
+             if (typeof showNotification === 'function') {
+                 showNotification('Demo piyasa verileri yüklendi.', 'success');
+             }
          }
 
                  // Trading modalını aç - İyileştirilmiş

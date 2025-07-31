@@ -4179,7 +4179,7 @@
                                         padding: 6px 8px !important;
                                         border-radius: 4px !important;
                                     ">
-                                        📊 Chart Ready
+                                        🔥 TEST CHART
                                     </div>
                                 </div>
                                 <div class="chart-stats">
@@ -4960,45 +4960,32 @@
                  tradingChart.destroy();
              }
              
-                         // Basit sahte fiyat verisi oluştur
+                         // Çok basit test verisi
              const data = [];
-             let currentPrice = 45230; // Bitcoin fiyatından başla
-             
-             for (let i = 0; i < 100; i++) { // 100 nokta
-                 // Basit fiyat hareketi
-                 const change = (Math.random() - 0.5) * 1000; // ±500 dolar
-                 currentPrice += change;
-                 
-                 // Minimum ve maksimum sınırlar
-                 currentPrice = Math.max(40000, Math.min(50000, currentPrice));
-                 
+             for (let i = 0; i < 20; i++) { // Sadece 20 nokta
                  data.push({
                      x: i,
-                     y: currentPrice
+                     y: 45000 + (i * 100) + (Math.random() * 200 - 100) // Basit artan trend
                  });
              }
              
-             // Chart.js konfigürasyonu - Basit ve görünür
+             // Çok basit chart konfigürasyonu
              const config = {
                  type: 'line',
                  data: {
                      labels: data.map((_, index) => index),
                      datasets: [{
-                         label: 'Bitcoin Fiyatı',
+                         label: 'Test',
                          data: data.map(d => d.y),
-                         borderColor: '#00ff00',
-                         backgroundColor: 'rgba(0, 255, 0, 0.3)',
-                         borderWidth: 3,
-                         fill: true,
-                         tension: 0.1,
-                         pointRadius: 2,
-                         pointBackgroundColor: '#00ff00',
+                         borderColor: '#ff0000',
+                         backgroundColor: 'rgba(255, 0, 0, 0.5)',
+                         borderWidth: 5,
+                         fill: false,
+                         tension: 0,
+                         pointRadius: 5,
+                         pointBackgroundColor: '#ff0000',
                          pointBorderColor: '#ffffff',
-                         pointBorderWidth: 1,
-                         pointHoverRadius: 8,
-                         pointHoverBackgroundColor: '#00ff00',
-                         pointHoverBorderColor: '#ffffff',
-                         pointHoverBorderWidth: 2,
+                         pointBorderWidth: 2,
                      }]
                  },
                  options: {
@@ -5006,7 +4993,7 @@
                      maintainAspectRatio: false,
                      plugins: {
                          legend: {
-                             display: false
+                             display: true
                          }
                      },
                      scales: {
@@ -5014,30 +5001,26 @@
                              type: 'linear',
                              display: true,
                              grid: {
-                                 color: 'rgba(255, 255, 255, 0.3)',
-                                 drawBorder: false,
+                                 color: '#ffffff',
+                                 drawBorder: true,
                              },
                              ticks: {
                                  color: '#ffffff',
                                  font: {
-                                     size: 12
-                                 },
-                                 maxTicksLimit: 8
+                                     size: 14
+                                 }
                              }
                          },
                          y: {
                              display: true,
                              grid: {
-                                 color: 'rgba(255, 255, 255, 0.3)',
-                                 drawBorder: false,
+                                 color: '#ffffff',
+                                 drawBorder: true,
                              },
                              ticks: {
                                  color: '#ffffff',
                                  font: {
-                                     size: 12
-                                 },
-                                 callback: function(value) {
-                                     return '$' + value.toLocaleString();
+                                     size: 14
                                  }
                              }
                          }

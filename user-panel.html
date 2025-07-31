@@ -2190,10 +2190,378 @@
                align-items: stretch !important;
            }
            
-           /* Modern Trading Modal Mobile Styles */
-           .trading-modal {
-               padding: 8px;
-           }
+                   /* Modern Trading Modal Styles */
+        .modern-trading-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        
+        .modal-container {
+            background: linear-gradient(135deg, #1a1f2e 0%, #2a2f3e 100%);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            transform: scale(0.9);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        /* Modern Header */
+        .modal-header-modern {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 32px;
+            background: linear-gradient(135deg, #2a3f5f 0%, #1e2742 100%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .coin-basic-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .coin-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #f7931a 0%, #ff8c00 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            box-shadow: 0 4px 20px rgba(247, 147, 26, 0.3);
+        }
+        
+        .coin-text h3 {
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: 700;
+            margin: 0;
+        }
+        
+        .coin-text span {
+            color: #8896ab;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .price-display {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        
+        .current-price-modern {
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .price-change-modern {
+            font-size: 14px;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 6px;
+            width: fit-content;
+        }
+        
+        .price-change-modern.positive {
+            background: rgba(0, 230, 118, 0.2);
+            color: #00e676;
+        }
+        
+        .price-change-modern.negative {
+            background: rgba(255, 107, 107, 0.2);
+            color: #ff6b6b;
+        }
+        
+        .close-btn-modern {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #ffffff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .close-btn-modern:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+        
+        /* Modern Content */
+        .modal-content-modern {
+            padding: 32px;
+            max-height: calc(90vh - 100px);
+            overflow-y: auto;
+        }
+        
+        /* Chart Section */
+        .chart-section-modern {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .chart-header h4 {
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .time-filters {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .time-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #8896ab;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .time-btn.active {
+            background: #00d4aa;
+            color: #ffffff;
+            border-color: #00d4aa;
+        }
+        
+        .chart-container-modern {
+            width: 100%;
+            height: 300px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .chart-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+        
+        .stat-modern {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        
+        .stat-modern .stat-label {
+            color: #8896ab;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .stat-modern .stat-value {
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .stat-modern .stat-value.positive {
+            color: #00e676;
+        }
+        
+        .stat-modern .stat-value.negative {
+            color: #ff6b6b;
+        }
+        
+        /* Trading Form */
+        .trading-form-modern {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .form-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        
+        .form-header h4 {
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .trade-type-toggle {
+            display: flex;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 4px;
+        }
+        
+        .trade-type-btn {
+            background: transparent;
+            border: none;
+            color: #8896ab;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .trade-type-btn.active {
+            background: #00d4aa;
+            color: #ffffff;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group-modern {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .form-group-modern label {
+            color: #8896ab;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .form-input-modern {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: #ffffff;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input-modern:focus {
+            outline: none;
+            border-color: #00d4aa;
+            box-shadow: 0 0 0 3px rgba(0, 212, 170, 0.1);
+        }
+        
+        .trade-btn-modern {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+        
+        .trade-btn-modern.buy {
+            background: linear-gradient(135deg, #00e676 0%, #00d4aa 100%);
+            color: #ffffff;
+        }
+        
+        .trade-btn-modern.sell {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%);
+            color: #ffffff;
+        }
+        
+        .trade-btn-modern:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .modern-trading-modal {
+                padding: 10px;
+            }
+            
+            .modal-container {
+                max-height: 95vh;
+            }
+            
+            .modal-header-modern {
+                padding: 20px;
+            }
+            
+            .header-left {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+            
+            .modal-content-modern {
+                padding: 20px;
+            }
+            
+            .chart-container-modern {
+                height: 200px;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .chart-stats {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+        }
            
            .modal-container {
                width: 100%;
@@ -3462,10 +3830,11 @@
                                             </div>
                                         </div>
                                         
-                                        <!-- Execute Trade -->
-                                        <button id="openTradeBtn" class="trade-open-btn" disabled>
-                                            <i class="fas fa-bolt"></i> Execute Trade
-                                        </button>
+                                                                        <!-- Execute Button -->
+                                <button class="trade-btn-modern buy" style="margin-top: 24px;">
+                                    <i class="fas fa-bolt"></i>
+                                    <span>İŞLEMİ GERÇEKLEŞTİR</span>
+                                </button>
                                     </div>
                                     
                                     <!-- No Selection State -->
@@ -3513,132 +3882,115 @@
                 </section>
 
                 <!-- Trading Modal -->
-                <div id="tradingModal" class="trading-modal" style="display: none;">
+                <div id="tradingModal" class="modern-trading-modal" style="display: none;">
                     <div class="modal-overlay" onclick="closeTradingModal()"></div>
                     <div class="modal-container">
-                        <div class="modal-header">
-                            <div class="modal-title-section">
-                                <h2>Kripto Trading</h2>
-                                <div class="modal-coin-info">
-                                    <span>Anlık İşlem Paneli</span>
+                        <!-- Modern Header -->
+                        <div class="modal-header-modern">
+                            <div class="header-left">
+                                <div class="coin-basic-info">
+                                    <div class="coin-icon">
+                                        <i class="fab fa-bitcoin"></i>
+                                    </div>
+                                    <div class="coin-text">
+                                        <h3 id="modalCoinName">Bitcoin</h3>
+                                        <span id="modalCoinSymbol">BTC</span>
+                                    </div>
+                                </div>
+                                <div class="price-display">
+                                    <div class="current-price-modern" id="modalCoinPrice">$45,230.50</div>
+                                    <div class="price-change-modern positive" id="modalCoinChange">+2.45%</div>
                                 </div>
                             </div>
-                            <button class="modal-close-btn" onclick="closeTradingModal()">
-                                <i class="fas fa-times"></i>
-                            </button>
+                            <div class="header-right">
+                                <button class="close-btn-modern" onclick="closeTradingModal()">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
                         </div>
                         
-                        <div class="modal-content">
-                            <!-- Tek Panel: Modern İşlem Formu -->
-                            <div class="modern-trade-panel">
-                                <!-- Coin Bilgi Header - Yeni Layout -->
-                                <div class="coin-info-header">
-                                    <div class="coin-left-section">
-                                    <div class="coin-main-info">
-                                        <div class="coin-avatar">
-                                            <i class="fab fa-bitcoin"></i>
-                                        </div>
-                                        <div class="coin-details">
-                                            <h2 id="modalCoinName">Bitcoin</h2>
-                                            <span id="modalCoinSymbol" class="coin-symbol-badge">BTC</span>
-                                        </div>
+                        <!-- Modern Content -->
+                        <div class="modal-content-modern">
+                            <!-- Chart Section -->
+                            <div class="chart-section-modern">
+                                <div class="chart-header">
+                                    <h4>Fiyat Grafiği</h4>
+                                    <div class="time-filters">
+                                        <button class="time-btn active">1H</button>
+                                        <button class="time-btn">4H</button>
+                                        <button class="time-btn">1D</button>
+                                        <button class="time-btn">1W</button>
                                     </div>
-                                        <!-- Para bilgileri logo altına taşındı -->
-                                        <div class="coin-price-info-left">
-                                            <div class="current-price" id="modalCoinPrice">$45,230.50</div>
-                                            <div id="modalCoinChange" class="price-change positive">+2.45%</div>
-                                            <!-- 24H yüksek/düşük bilgileri -->
-                                            <div class="price-stats">
-                                                <div class="stat-item">
-                                                    <span class="stat-label">H:</span>
-                                                    <span class="stat-value positive" id="modalCoinHigh">$23,316</span>
-                                        </div>
-                                                <div class="stat-item">
-                                                    <span class="stat-label">L:</span>
-                                                    <span class="stat-value negative" id="modalCoinLow">$3,733</span>
-                                                </div>
-                                            </div>
-                                        </div>
+                                </div>
+                                <div class="chart-container-modern">
+                                    <canvas id="tradingChart"></canvas>
+                                </div>
+                                <div class="chart-stats">
+                                    <div class="stat-modern">
+                                        <span class="stat-label">24H Yüksek</span>
+                                        <span class="stat-value positive" id="modalCoinHigh">$46,890</span>
                                     </div>
-                                    <!-- Chart.js büyük boyutla sağ tarafa -->
-                                    <div class="coin-chart-section">
-                                        <div id="chart-container" style="
-                                            width: 320px !important; 
-                                            height: 180px !important; 
-                                            background: rgba(255, 255, 255, 0.03) !important;
-                                            border: 1px solid rgba(255, 255, 255, 0.1) !important;
-                                            border-radius: 12px !important;
-                                            position: relative !important;
-                                            overflow: hidden !important;
-                                            padding: 12px !important;
-                                            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
-                                        ">
-                                            <canvas id="tradingChart" style="width: 100%; height: 100%;"></canvas>
-
-                                        </div>
+                                    <div class="stat-modern">
+                                        <span class="stat-label">24H Düşük</span>
+                                        <span class="stat-value negative" id="modalCoinLow">$44,120</span>
+                                    </div>
+                                    <div class="stat-modern">
+                                        <span class="stat-label">Hacim</span>
+                                        <span class="stat-value">$2.4B</span>
+                                    </div>
+                                </div>
+                            </div>
+                                
+                            <!-- Trading Form -->
+                            <div class="trading-form-modern">
+                                <div class="form-header">
+                                    <h4>İşlem Yap</h4>
+                                    <div class="trade-type-toggle">
+                                        <button class="trade-type-btn active">Spot</button>
+                                        <button class="trade-type-btn">Kaldıraçlı</button>
                                     </div>
                                 </div>
                                 
-                                <!-- Trading Tabs -->
-                                <div class="modern-trading-tabs">
-                                    <button class="modern-tab active" data-tab="spot">
-                                            <i class="fas fa-coins"></i>
-                                            <span>Spot İşlem</span>
-                                        </button>
-                                    <button class="modern-tab" data-tab="margin">
-                                            <i class="fas fa-chart-line"></i>
-                                            <span>Kaldıraçlı</span>
-                                        </button>
+                                <!-- Buy/Sell Toggle -->
+                                <div class="form-row">
+                                    <button class="trade-btn-modern buy active">
+                                        <i class="fas fa-arrow-up"></i>
+                                        <span>ALIŞ</span>
+                                        <small id="buyPrice">₺1,350,000</small>
+                                    </button>
+                                    <button class="trade-btn-modern sell">
+                                        <i class="fas fa-arrow-down"></i>
+                                        <span>SATIŞ</span>
+                                        <small id="sellPrice">₺1,348,000</small>
+                                    </button>
                                 </div>
-                                
-                                <div class="order-content">
-                                    <!-- Al/Sat Toggle -->
-                                    <div class="order-direction-toggle">
-                                        <button class="direction-btn buy-btn active" data-direction="buy">
-                                            <i class="fas fa-arrow-up"></i>
-                                            <span class="btn-text">AL</span>
-                                            <span class="btn-subtitle" id="buyPrice">₺1,350,000</span>
-                                        </button>
-                                        <button class="direction-btn sell-btn" data-direction="sell">
-                                            <i class="fas fa-arrow-down"></i>
-                                            <span class="btn-text">SAT</span>
-                                            <span class="btn-subtitle" id="sellPrice">₺1,348,000</span>
-                                        </button>
-                                    </div>
                                     
-                                    <!-- İşlem Türü -->
-                                    <div class="form-group">
-                                        <label class="form-label">İşlem Türü</label>
-                                        <select id="orderType" class="form-select">
-                                            <option value="market">Piyasa Emri</option>
-                                            <option value="limit">Limit Emri</option>
-                                            <option value="stop_limit">Stop-Limit</option>
+                                <!-- Form Fields -->
+                                <div class="form-row">
+                                    <div class="form-group-modern">
+                                        <label>İşlem Türü</label>
+                                        <select class="form-input-modern">
+                                            <option>Piyasa Emri</option>
+                                            <option>Limit Emri</option>
+                                            <option>Stop-Limit</option>
                                         </select>
                                     </div>
-                                    
-                                    <!-- Fiyat (Limit emirler için) -->
-                                    <div class="form-group" id="priceGroup" style="display: none;">
-                                        <label class="form-label">Fiyat (₺)</label>
-                                        <div class="input-group">
-                                            <input type="number" id="orderPrice" class="form-input" placeholder="0.00" step="0.01">
-                                            <span class="input-suffix">₺</span>
-                                        </div>
+                                    <div class="form-group-modern">
+                                        <label>Miktar</label>
+                                        <input type="number" class="form-input-modern" placeholder="0.00" step="0.01">
                                     </div>
-                                    
-                                    <!-- Miktar Seçimi -->
-                                    <div class="form-group">
-                                        <label class="form-label">Miktar</label>
-                                        <div class="amount-tabs">
-                                            <button class="amount-tab active" data-type="quantity">
-                                                <i class="fas fa-coins"></i>
-                                                <span>Birim</span>
-                                            </button>
-                                            <button class="amount-tab" data-type="total">
-                                                <i class="fas fa-money-bill"></i>
-                                                <span>Tutar (₺)</span>
-                                            </button>
-                                        </div>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group-modern">
+                                        <label>Fiyat (₺)</label>
+                                        <input type="number" class="form-input-modern" placeholder="0.00" step="0.01">
                                     </div>
+                                    <div class="form-group-modern">
+                                        <label>Toplam</label>
+                                        <input type="number" class="form-input-modern" placeholder="0.00" step="0.01" readonly>
+                                    </div>
+                                </div>
                                     
                                     <!-- Birim Girişi -->
                                     <div class="form-group" id="quantityGroup">
@@ -4315,14 +4667,22 @@
          });
          
          function initTradingChart() {
+             console.log('🚀 initTradingChart başlatıldı');
+             
              // Chart.js yüklenmiş mi kontrol et
              if (typeof Chart === 'undefined') {
+                 console.error('❌ Chart.js yüklenmemiş!');
                  setTimeout(initTradingChart, 1000); // 1 saniye bekle ve tekrar dene
                  return;
              }
              
+             console.log('✅ Chart.js yüklendi');
+             
              const ctx = document.getElementById('tradingChart');
+                        console.log('📊 Canvas element:', ctx);
+             
              if (!ctx) {
+                 console.error('❌ tradingChart canvas bulunamadı!');
                  return;
              }
              
@@ -4398,10 +4758,13 @@
              
              // Chart'ı oluştur
              try {
+                 console.log('🎨 Chart oluşturuluyor...');
                  tradingChart = new Chart(ctx, config);
-                tradingChart.update();
+                 console.log('✅ Chart başarıyla oluşturuldu');
+                 tradingChart.update();
+                 console.log('✅ Chart render edildi');
              } catch (error) {
-                console.error('Chart oluşturulurken hata:', error);
+                console.error('❌ Chart oluşturulurken hata:', error);
              }
          }
          

@@ -8,8 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
             <!-- Chart.js CDN - Latest Version -->
         <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.min.js" defer></script>
-        <!-- Chart.js Time Adapter -->
-        <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js" defer></script>
     <style>
         * {
             margin: 0;
@@ -4924,24 +4922,20 @@
                  tradingChart.destroy();
              }
              
-                         // Gerçekçi sahte fiyat verisi oluştur
+                         // Basit sahte fiyat verisi oluştur
              const data = [];
              let currentPrice = 45230; // Bitcoin fiyatından başla
-             const volatility = 0.02; // %2 volatilite
              
-             for (let i = 0; i < 200; i++) { // 200 nokta (daha detaylı grafik)
-                 // Gerçekçi fiyat hareketi
-                 const change = (Math.random() - 0.5) * volatility * currentPrice;
+             for (let i = 0; i < 100; i++) { // 100 nokta
+                 // Basit fiyat hareketi
+                 const change = (Math.random() - 0.5) * 1000; // ±500 dolar
                  currentPrice += change;
                  
                  // Minimum ve maksimum sınırlar
                  currentPrice = Math.max(40000, Math.min(50000, currentPrice));
                  
-                 // Zaman damgası (son 24 saat)
-                 const timestamp = Date.now() - (200 - i) * (24 * 60 * 60 * 1000 / 200);
-                 
                  data.push({
-                     x: timestamp,
+                     x: i,
                      y: currentPrice
                  });
              }
@@ -4950,9 +4944,10 @@
              const config = {
                  type: 'line',
                  data: {
+                     labels: data.map((_, index) => index),
                      datasets: [{
                          label: 'Bitcoin Fiyatı',
-                         data: data,
+                         data: data.map(d => d.y),
                          borderColor: '#00E676',
                          backgroundColor: 'rgba(0, 230, 118, 0.1)',
                          borderWidth: 2,
@@ -4975,24 +4970,14 @@
                      },
                      scales: {
                          x: {
-                             type: 'time',
-                             time: {
-                                 unit: 'hour',
-                                 displayFormats: {
-                                     hour: 'HH:mm'
-                                 }
-                             },
+                             type: 'linear',
                              display: true,
                              grid: {
                                  color: 'rgba(255, 255, 255, 0.1)',
                                  drawBorder: false,
                              },
                              ticks: {
-                                 color: 'rgba(255, 255, 255, 0.6)',
-                                 font: {
-                                     size: 10
-                                 },
-                                 maxTicksLimit: 6
+                                 display: false
                              }
                          },
                          y: {
@@ -5025,6 +5010,8 @@
              // Chart'ı oluştur
              try {
                  console.log('🎨 Chart oluşturuluyor...');
+                 console.log('📊 Data:', data);
+                 console.log('⚙️ Config:', config);
                  tradingChart = new Chart(ctx, config);
                  console.log('✅ Chart başarıyla oluşturuldu');
                  tradingChart.update();

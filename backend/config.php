@@ -43,7 +43,7 @@ if (!isset($_SESSION['user_id']) && defined('DEBUG_MODE') && DEBUG_MODE) {
     $_SESSION['role'] = 'user';
 }
 
-// Oturum başlat
+// Oturum yönetimi - çakışmaları önle
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 } 

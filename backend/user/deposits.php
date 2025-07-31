@@ -1,7 +1,42 @@
 <?php
-session_start();
-require_once '../config.php';
-require_once '../utils/security.php';
+// Session yönetimi - çakışma önleme
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Config dosyası path'ini esnek şekilde bulma
+$config_paths = [
+    __DIR__ . '/../config.php',
+    __DIR__ . '/config.php',
+    dirname(__DIR__) . '/config.php'
+];
+
+$config_loaded = false;
+foreach ($config_paths as $path) {
+    if (file_exists($path)) {
+        require_once $path;
+        $config_loaded = true;
+        break;
+    }
+}
+
+if (!$config_loaded) {
+    http_response_code(500);
+    die(json_encode(['error' => 'Config dosyası bulunamadı']));
+}
+
+// Security utils - opsiyonel
+$security_paths = [
+    __DIR__ . '/../utils/security.php',
+    __DIR__ . '/utils/security.php'
+];
+
+foreach ($security_paths as $path) {
+    if (file_exists($path)) {
+        require_once $path;
+        break;
+    }
+}
 
 // Test modu için session kontrolü esnetildi
 if (!isset($_SESSION['user_id']) && (!defined('DEBUG_MODE') || !DEBUG_MODE)) {

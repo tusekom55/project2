@@ -3,12 +3,42 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+// Session yönetimi - çakışma önleme
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 echo "<h2>🧪 Deposit API Test Sonuçları</h2>\n";
 
 // Test 1: Config dosyası ve PDO bağlantısı
 echo "<h3>1. Database Bağlantı Testi</h3>\n";
+
+// Config dosyası path'ini esnek şekilde bulma
+$config_paths = [
+    __DIR__ . '/config.php',
+    __DIR__ . '/../config.php',
+    dirname(__DIR__) . '/config.php'
+];
+
+$config_loaded = false;
+foreach ($config_paths as $path) {
+    if (file_exists($path)) {
+        echo "📁 Config dosyası bulundu: " . htmlspecialchars($path) . "<br>\n";
+        require_once $path;
+        $config_loaded = true;
+        break;
+    }
+}
+
+if (!$config_loaded) {
+    echo "❌ Config dosyası hiçbir yerde bulunamadı. Aranan yerler:<br>\n";
+    foreach ($config_paths as $path) {
+        echo "   - " . htmlspecialchars($path) . "<br>\n";
+    }
+    exit;
+}
+
 try {
-    require_once 'config.php';
     $conn = db_connect();
     echo "✅ PDO Bağlantısı başarılı<br>\n";
     echo "📊 Connection type: " . get_class($conn) . "<br>\n";

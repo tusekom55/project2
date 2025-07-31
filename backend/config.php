@@ -34,10 +34,10 @@ function db_connect() {
     }
 }
 
-// Debug modu (test için)
-define('DEBUG_MODE', true);
+// Debug modu (production'da false yapın)
+define('DEBUG_MODE', false);
 
-// Test modu session değerleri
+// Sadece debug modunda test session değerleri
 if (!isset($_SESSION['user_id']) && defined('DEBUG_MODE') && DEBUG_MODE) {
     $_SESSION['user_id'] = 1; // Test kullanıcısı
     $_SESSION['role'] = 'user';

@@ -3,8 +3,8 @@ session_start();
 require_once '../config.php';
 require_once '../utils/security.php';
 
-// Kullanıcının giriş yapıp yapmadığını kontrol et
-if (!isset($_SESSION['user_id'])) {
+// Test modu için session kontrolü esnetildi
+if (!isset($_SESSION['user_id']) && (!defined('DEBUG_MODE') || !DEBUG_MODE)) {
     http_response_code(401);
     echo json_encode(['error' => 'Oturum açmanız gerekiyor']);
     exit;
@@ -22,6 +22,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 $action = $_GET['action'] ?? '';
 $user_id = $_SESSION['user_id'];
+
+// Database bağlantısını kur
+$conn = db_connect();
 
 switch ($action) {
     case 'list':

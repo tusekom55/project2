@@ -22,6 +22,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 $action = $_GET['action'] ?? '';
 
+// Database bağlantısını kur
+$conn = db_connect();
+
 switch ($action) {
     case 'list':
         // Para yatırma taleplerini listele

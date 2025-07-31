@@ -1,9 +1,9 @@
 <?php
 // Veritabanı bağlantı ayarları
 $DB_HOST = 'localhost';
-$DB_USER = 'u225998063_dbt';
+$DB_USER = 'u225998063_tug01';
 $DB_PASS = '123456Tubb';
-$DB_NAME = 'u225998063_tugay';
+$DB_NAME = 'u225998063_proje';
 
 // Bağlantı fonksiyonu (mysqli, hata kontrolü ile)
 function db_connect() {

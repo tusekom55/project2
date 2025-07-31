@@ -2525,41 +2525,272 @@
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
         
+        .buy-sell-toggle {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .buy-sell-toggle .trade-btn-modern {
+            margin-top: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 16px 12px;
+        }
+        
+        .buy-sell-toggle .trade-btn-modern i {
+            font-size: 18px;
+        }
+        
+        .buy-sell-toggle .trade-btn-modern span {
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .buy-sell-toggle .trade-btn-modern small {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .modern-trading-modal {
-                padding: 10px;
+                padding: 5px !important;
+                align-items: flex-end !important;
             }
             
             .modal-container {
-                max-height: 95vh;
+                max-height: 98vh !important;
+                width: 100% !important;
+                border-radius: 20px 20px 0 0 !important;
+                margin-bottom: 0 !important;
             }
             
             .modal-header-modern {
-                padding: 20px;
+                padding: 16px 20px !important;
+                flex-direction: column !important;
+                gap: 16px !important;
             }
             
             .header-left {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
+                flex-direction: row !important;
+                align-items: center !important;
+                gap: 12px !important;
+                width: 100% !important;
+            }
+            
+            .coin-basic-info {
+                flex: 1 !important;
+            }
+            
+            .price-display {
+                flex-direction: row !important;
+                align-items: center !important;
+                gap: 12px !important;
+            }
+            
+            .current-price-modern {
+                font-size: 20px !important;
+            }
+            
+            .price-change-modern {
+                font-size: 12px !important;
+            }
+            
+            .header-right {
+                align-self: flex-end !important;
             }
             
             .modal-content-modern {
-                padding: 20px;
+                padding: 16px 20px !important;
+                max-height: calc(98vh - 120px) !important;
+                overflow-y: auto !important;
+            }
+            
+            .chart-section-modern {
+                padding: 16px !important;
+                margin-bottom: 16px !important;
+            }
+            
+            .chart-header {
+                flex-direction: column !important;
+                gap: 12px !important;
+                align-items: flex-start !important;
+            }
+            
+            .time-filters {
+                width: 100% !important;
+                justify-content: space-between !important;
+            }
+            
+            .time-btn {
+                flex: 1 !important;
+                text-align: center !important;
+                padding: 8px 4px !important;
+                font-size: 11px !important;
             }
             
             .chart-container-modern {
-                height: 200px;
-            }
-            
-            .form-row {
-                grid-template-columns: 1fr;
+                height: 180px !important;
+                margin-bottom: 16px !important;
             }
             
             .chart-stats {
-                grid-template-columns: 1fr;
-                gap: 12px;
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 8px !important;
+            }
+            
+            .stat-modern .stat-label {
+                font-size: 10px !important;
+            }
+            
+            .stat-modern .stat-value {
+                font-size: 14px !important;
+            }
+            
+            .trading-form-modern {
+                padding: 16px !important;
+            }
+            
+            .form-header {
+                flex-direction: column !important;
+                gap: 12px !important;
+                align-items: flex-start !important;
+            }
+            
+            .trade-type-toggle {
+                width: 100% !important;
+                justify-content: space-between !important;
+            }
+            
+            .trade-type-btn {
+                flex: 1 !important;
+                text-align: center !important;
+                padding: 10px 8px !important;
+                font-size: 13px !important;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr !important;
+                gap: 12px !important;
+                margin-bottom: 16px !important;
+            }
+            
+            .form-group-modern label {
+                font-size: 13px !important;
+            }
+            
+            .form-input-modern {
+                padding: 12px 14px !important;
+                font-size: 16px !important;
+            }
+            
+            .trade-btn-modern {
+                padding: 14px !important;
+                font-size: 15px !important;
+                margin-top: 16px !important;
+            }
+            
+            .buy-sell-toggle {
+                gap: 8px !important;
+                margin-bottom: 16px !important;
+            }
+            
+            .buy-sell-toggle .trade-btn-modern {
+                padding: 12px 8px !important;
+            }
+            
+            .buy-sell-toggle .trade-btn-modern i {
+                font-size: 16px !important;
+            }
+            
+            .buy-sell-toggle .trade-btn-modern span {
+                font-size: 13px !important;
+            }
+            
+            .buy-sell-toggle .trade-btn-modern small {
+                font-size: 11px !important;
+            }
+        }
+        
+        /* Extra Small Mobile */
+        @media (max-width: 480px) {
+            .modern-trading-modal {
+                padding: 0 !important;
+            }
+            
+            .modal-container {
+                border-radius: 16px 16px 0 0 !important;
+                max-height: 100vh !important;
+            }
+            
+            .modal-header-modern {
+                padding: 12px 16px !important;
+            }
+            
+            .header-left {
+                gap: 8px !important;
+            }
+            
+            .coin-icon {
+                width: 40px !important;
+                height: 40px !important;
+                font-size: 16px !important;
+            }
+            
+            .coin-text h3 {
+                font-size: 16px !important;
+            }
+            
+            .coin-text span {
+                font-size: 12px !important;
+            }
+            
+            .current-price-modern {
+                font-size: 18px !important;
+            }
+            
+            .modal-content-modern {
+                padding: 12px 16px !important;
+            }
+            
+            .chart-container-modern {
+                height: 150px !important;
+            }
+            
+            .time-btn {
+                font-size: 10px !important;
+                padding: 6px 2px !important;
+            }
+            
+            .chart-stats {
+                grid-template-columns: 1fr !important;
+                gap: 8px !important;
+            }
+            
+            .stat-modern {
+                flex-direction: row !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+            }
+            
+            .buy-sell-toggle .trade-btn-modern {
+                padding: 10px 6px !important;
+            }
+            
+            .buy-sell-toggle .trade-btn-modern i {
+                font-size: 14px !important;
+            }
+            
+            .buy-sell-toggle .trade-btn-modern span {
+                font-size: 12px !important;
+            }
+            
+            .buy-sell-toggle .trade-btn-modern small {
+                font-size: 10px !important;
             }
         }
            
@@ -3952,7 +4183,7 @@
                                 </div>
                                 
                                 <!-- Buy/Sell Toggle -->
-                                <div class="form-row">
+                                <div class="buy-sell-toggle">
                                     <button class="trade-btn-modern buy active">
                                         <i class="fas fa-arrow-up"></i>
                                         <span>ALIŞ</span>
